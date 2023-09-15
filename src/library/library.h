@@ -3,8 +3,10 @@
 
 #include <time.h>
 
+
 #define BOOK_CHUNK 64
 #define BORROW_CHUNK 64
+
 
 typedef enum{
   ONGOING,
@@ -16,6 +18,7 @@ typedef enum {
   LOADNEXT,
   LOADPREV
 }Scrolling ;
+
 
 typedef struct{
   int bookID;

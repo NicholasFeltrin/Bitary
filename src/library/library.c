@@ -11,8 +11,12 @@ extern int createDatabase();
 extern int createBook(Book *book);
 extern int createBorrow(Borrow *borrow);
 extern int deleteBook(int bookID);
-//extern int fetchBook(Book **buffer, int pageSize);
 extern int loadBookDataChunk(Book **buffer, Scrolling scrolling);
+//extern int fetchBook(Book **buffer, int pageSize);
+
+
+sqlite3 *dataBase;
+char databasePath[] = DATABASE_FILE_PATH;
 
 Book *dataBookBuffer;
 Borrow *dataBorrowBuffer;
@@ -22,8 +26,6 @@ char *dataBookLibraryIDCache;
 char *dataBookTitleBuffer;
 char *dataBookLibraryIDBuffer;
 
-sqlite3 *dataBase;
-char databasePath[] = DATABASE_FILE_PATH;
 
 int testCreate(){
   Book myBook;
@@ -61,12 +63,15 @@ int testFetch(){
 
 int initLibrary(){
   int retval;
+  // Open Database
   retval = openDatabase();
   CHECK(retval != 0, "Error in openDatabase()", return -1);
 
+  // Allocate buffer for a chunk of books and borrows
   dataBookBuffer = (Book*)malloc(sizeof(Book)*BOOK_CHUNK);
   dataBorrowBuffer = (Borrow*)malloc(sizeof(Borrow)*BORROW_CHUNK);
 
+  // Allocate buffer for strings associated book and borrow data
   dataBookTitleCache = (char*)calloc(BOOK_TITLE_CACHE_LENGTH+BOOK_TITLE_BUFFER_LENGTH, sizeof(char));
   CHECK(dataBookTitleCache == NULL, "Error allocating memory", return-1);
   dataBookTitleBuffer = dataBookTitleCache+BOOK_TITLE_CACHE_LENGTH;
@@ -74,7 +79,6 @@ int initLibrary(){
   dataBookLibraryIDCache = (char*)calloc(BOOK_LIBRARYID_CACHE_LENGTH+BOOK_LIBRARYID_BUFFER_LENGTH, sizeof(char));
   CHECK(dataBookLibraryIDCache == NULL, "Error allocating memory", return-1);
   dataBookLibraryIDBuffer = dataBookLibraryIDCache+BOOK_TITLE_CACHE_LENGTH;
-
 
   return 0;
 }
@@ -84,7 +88,6 @@ int closeLibrary(){
   retval = closeDatabase();
   CHECK(retval != 0, "Error in closeDatabase()", return -1) ;
 
-  printf("kucing: %d\n", dataBookBuffer[2].bookID);
   free(dataBookBuffer);
   free(dataBorrowBuffer);
   free(dataBookTitleCache);
@@ -109,11 +112,12 @@ int createDatabase(){
   char *sqlErrmsg;
   int retval;
 
-  // Create file
+  // Create database.db file
   FILE *filePtr = fopen(databasePath, "w");
   CHECK(filePtr == NULL, "Failed to create database", return -1);
   fclose(filePtr);
 
+  // Create book and borrow table
   const char *createTableBooks = "CREATE TABLE IF NOT EXISTS " DATABASE_BOOKTABLE_NAME " ("
                             "bookID INTEGER PRIMARY KEY AUTOINCREMENT, "
                             "borrowID INTEGER, "
@@ -190,6 +194,35 @@ int deleteBook(int bookID){
   return 0;
 }
 
+int createBorrow(Borrow *borrow){
+  int retval = 0;
+  sqlite3_stmt* stmt;
+  const char* sqlInsert = 
+      "INSERT INTO " DATABASE_BORROWTABLE_NAME  
+      " (bookID, status, startTimestamp, endTimestamp, name, classSequence)" 
+      " VALUES (?, ?, ?, ?, ?, ?)";
+
+  // Prepare
+  retval |= sqlite3_prepare_v2(dataBase, sqlInsert, -1, &stmt, NULL);
+
+  retval |= sqlite3_bind_int(stmt, 1, borrow->bookID);
+  retval |= sqlite3_bind_int(stmt, 2, borrow->status);
+  retval |= sqlite3_bind_int(stmt, 3, borrow->startTimestamp);
+  retval |= sqlite3_bind_int(stmt, 4, borrow->endTimestamp);
+  retval |= sqlite3_bind_text(stmt, 5, borrow->name, -1, SQLITE_STATIC);
+  retval |= sqlite3_bind_text(stmt, 6, borrow->classSequence, -1, SQLITE_STATIC);
+  CHECK(retval != SQLITE_OK, sqlite3_errmsg(dataBase), return -1);
+
+  // Execute
+  retval = sqlite3_step(stmt);
+  CHECK(retval != SQLITE_DONE, sqlite3_errmsg(dataBase), return -1);
+
+  // Finalize
+  sqlite3_finalize(stmt);
+
+  return 0;
+}
+
 int loadBookDataChunk(Book **buffer, Scrolling scrolling){
   int retval = 0; 
   static int offset = 0;
@@ -210,12 +243,12 @@ int loadBookDataChunk(Book **buffer, Scrolling scrolling){
       break;
   }
 
+  // Prepare the query
   snprintf(sqlQuery, sizeof(sqlQuery), 
            "SELECT bookID, borrowID, title, libraryID FROM " DATABASE_BOOKTABLE_NAME " LIMIT %d OFFSET %d",
            BOOK_CHUNK, offset);
   ;
 
-  // Prepare the query
   sqlite3_stmt *stmt;
   retval |= sqlite3_prepare_v2(dataBase, sqlQuery, -1, &stmt, 0);
   CHECK(retval != SQLITE_OK, sqlite3_errmsg(dataBase), return -1);
@@ -224,9 +257,11 @@ int loadBookDataChunk(Book **buffer, Scrolling scrolling){
   int i = 0;
   retval = sqlite3_step(stmt);
   while(retval == SQLITE_ROW){
+    // Copy to main buffer
     (*buffer)[i].bookID = sqlite3_column_int(stmt, 0);
     (*buffer)[i].borrowID = sqlite3_column_int(stmt, 1);
-    // TODO: Seems a little sussy to me
+
+    // Copy to string buffer
     strcat((char*)dataBookTitleBuffer+bufferTitleOffset, (char*)sqlite3_column_text(stmt, 2));
     (*buffer)[i].title = dataBookTitleBuffer+bufferTitleOffset;
     bufferTitleOffset += sqlite3_column_bytes(stmt, 2)+1;
@@ -234,17 +269,16 @@ int loadBookDataChunk(Book **buffer, Scrolling scrolling){
     strcat(dataBookLibraryIDBuffer+bufferLibraryIDOffset, (char*)sqlite3_column_text(stmt, 3));
     (*buffer)[i].libraryID = dataBookLibraryIDBuffer+bufferLibraryIDOffset;
     bufferLibraryIDOffset += sqlite3_column_bytes(stmt, 3)+1;
-    // TODO: Seems a little sussy to me
+
     retval = sqlite3_step(stmt);
     ++i;
   }
 
-  // Finalize the statement
+  // Finalize
   sqlite3_finalize(stmt);
   return 0;
 }
 
-// TODO create buffer to put text in
 /*
 int fetchBook(Book **buffer, int pageSize){
   int retval = 0;
@@ -280,31 +314,3 @@ int fetchBook(Book **buffer, int pageSize){
 }
 */
 
-int createBorrow(Borrow *borrow){
-  int retval = 0;
-  sqlite3_stmt* stmt;
-  const char* sqlInsert = 
-      "INSERT INTO " DATABASE_BORROWTABLE_NAME  
-      " (bookID, status, startTimestamp, endTimestamp, name, classSequence)" 
-      " VALUES (?, ?, ?, ?, ?, ?)";
-
-  // Prepare
-  retval |= sqlite3_prepare_v2(dataBase, sqlInsert, -1, &stmt, NULL);
-
-  retval |= sqlite3_bind_int(stmt, 1, borrow->bookID);
-  retval |= sqlite3_bind_int(stmt, 2, borrow->status);
-  retval |= sqlite3_bind_int(stmt, 3, borrow->startTimestamp);
-  retval |= sqlite3_bind_int(stmt, 4, borrow->endTimestamp);
-  retval |= sqlite3_bind_text(stmt, 5, borrow->name, -1, SQLITE_STATIC);
-  retval |= sqlite3_bind_text(stmt, 6, borrow->classSequence, -1, SQLITE_STATIC);
-  CHECK(retval != SQLITE_OK, sqlite3_errmsg(dataBase), return -1);
-
-  // Execute
-  retval = sqlite3_step(stmt);
-  CHECK(retval != SQLITE_DONE, sqlite3_errmsg(dataBase), return -1);
-
-  // Finalize
-  sqlite3_finalize(stmt);
-
-  return 0;
-}
