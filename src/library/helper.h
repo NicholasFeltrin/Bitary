@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 // Handle errors
 #define CHECK(condition, errorMessage, handle)  { \
   if(condition){ \

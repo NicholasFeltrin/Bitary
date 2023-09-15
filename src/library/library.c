@@ -1,6 +1,6 @@
-#include "helper.h"
 #include "library.h"
 #include "defs.h"
+#include "helper.h"
 #include <string.h>
 #include <sqlite3.h>
 
@@ -11,10 +11,16 @@ extern int createDatabase();
 extern int createBook(Book *book);
 extern int createBorrow(Borrow *borrow);
 extern int deleteBook(int bookID);
-extern int fetchBook(Book **buffer, int pageSize);
+//extern int fetchBook(Book **buffer, int pageSize);
+extern int loadBookDataChunk(Book **buffer, Scrolling scrolling);
 
-Book **bookDataBuffer;
-Borrow **borrowDataBuffer;
+Book *dataBookBuffer;
+Borrow *dataBorrowBuffer;
+
+char *dataBookTitleCache;
+char *dataBookLibraryIDCache;
+char *dataBookTitleBuffer;
+char *dataBookLibraryIDBuffer;
 
 sqlite3 *dataBase;
 char databasePath[] = DATABASE_FILE_PATH;
@@ -38,19 +44,17 @@ int testCreate(){
 }
 
 int testFetch(){
-  Book *myBook;
-  myBook = (Book *)malloc(100*sizeof(Book));
-  fetchBook(&myBook, 20);
-
-  printf("here: %p\n", myBook);
+  //Book *myBook;
+ // myBook = (Book *)malloc(100*sizeof(Book));
+//  loadBookDataChunk(&, LOADBEGINNING);
 
   for(int i = 0;i < 20;++i){
-    printf("ID: %d\n", myBook[i].bookID);
-    printf("borrowID: %d\n", myBook[i].borrowID);
-    printf("title: %s\n", myBook[i].title);
+    printf("ID: %d\n", dataBookBuffer[i].bookID);
+    printf("borrowID: %d\n", dataBookBuffer[i].borrowID);
+    printf("title: %s\n", dataBookBuffer[i].title);
   }
 
-  free(myBook);
+  //free(myBook);
 
   return 0;
 }
@@ -60,6 +64,18 @@ int initLibrary(){
   retval = openDatabase();
   CHECK(retval != 0, "Error in openDatabase()", return -1);
 
+  dataBookBuffer = (Book*)malloc(sizeof(Book)*BOOK_CHUNK);
+  dataBorrowBuffer = (Borrow*)malloc(sizeof(Borrow)*BORROW_CHUNK);
+
+  dataBookTitleCache = (char*)calloc(BOOK_TITLE_CACHE_LENGTH+BOOK_TITLE_BUFFER_LENGTH, sizeof(char));
+  CHECK(dataBookTitleCache == NULL, "Error allocating memory", return-1);
+  dataBookTitleBuffer = dataBookTitleCache+BOOK_TITLE_CACHE_LENGTH;
+
+  dataBookLibraryIDCache = (char*)calloc(BOOK_LIBRARYID_CACHE_LENGTH+BOOK_LIBRARYID_BUFFER_LENGTH, sizeof(char));
+  CHECK(dataBookLibraryIDCache == NULL, "Error allocating memory", return-1);
+  dataBookLibraryIDBuffer = dataBookLibraryIDCache+BOOK_TITLE_CACHE_LENGTH;
+
+
   return 0;
 }
 
@@ -67,6 +83,12 @@ int closeLibrary(){
   int retval;
   retval = closeDatabase();
   CHECK(retval != 0, "Error in closeDatabase()", return -1) ;
+
+  printf("kucing: %d\n", dataBookBuffer[2].bookID);
+  free(dataBookBuffer);
+  free(dataBorrowBuffer);
+  free(dataBookTitleCache);
+  free(dataBookLibraryIDCache);
 
   return 0;
 }
@@ -168,7 +190,62 @@ int deleteBook(int bookID){
   return 0;
 }
 
+int loadBookDataChunk(Book **buffer, Scrolling scrolling){
+  int retval = 0; 
+  static int offset = 0;
+  int bufferTitleOffset = 0;
+  int bufferLibraryIDOffset = 0;
+
+  static char sqlQuery[128];
+
+  switch(scrolling){
+    case LOADNEXT:
+      ++offset;
+      break;
+    case LOADPREV:
+      --offset;
+      break;
+    case LOADBEGINNING:
+      offset = 0;
+      break;
+  }
+
+  snprintf(sqlQuery, sizeof(sqlQuery), 
+           "SELECT bookID, borrowID, title, libraryID FROM " DATABASE_BOOKTABLE_NAME " LIMIT %d OFFSET %d",
+           BOOK_CHUNK, offset);
+  ;
+
+  // Prepare the query
+  sqlite3_stmt *stmt;
+  retval |= sqlite3_prepare_v2(dataBase, sqlQuery, -1, &stmt, 0);
+  CHECK(retval != SQLITE_OK, sqlite3_errmsg(dataBase), return -1);
+
+  // Execute
+  int i = 0;
+  retval = sqlite3_step(stmt);
+  while(retval == SQLITE_ROW){
+    (*buffer)[i].bookID = sqlite3_column_int(stmt, 0);
+    (*buffer)[i].borrowID = sqlite3_column_int(stmt, 1);
+    // TODO: Seems a little sussy to me
+    strcat((char*)dataBookTitleBuffer+bufferTitleOffset, (char*)sqlite3_column_text(stmt, 2));
+    (*buffer)[i].title = dataBookTitleBuffer+bufferTitleOffset;
+    bufferTitleOffset += sqlite3_column_bytes(stmt, 2)+1;
+
+    strcat(dataBookLibraryIDBuffer+bufferLibraryIDOffset, (char*)sqlite3_column_text(stmt, 3));
+    (*buffer)[i].libraryID = dataBookLibraryIDBuffer+bufferLibraryIDOffset;
+    bufferLibraryIDOffset += sqlite3_column_bytes(stmt, 3)+1;
+    // TODO: Seems a little sussy to me
+    retval = sqlite3_step(stmt);
+    ++i;
+  }
+
+  // Finalize the statement
+  sqlite3_finalize(stmt);
+  return 0;
+}
+
 // TODO create buffer to put text in
+/*
 int fetchBook(Book **buffer, int pageSize){
   int retval = 0;
   int offset = 0;
@@ -201,6 +278,7 @@ int fetchBook(Book **buffer, int pageSize){
   sqlite3_finalize(stmt);
   return 0;
 }
+*/
 
 int createBorrow(Borrow *borrow){
   int retval = 0;

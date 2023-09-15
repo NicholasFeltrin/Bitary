@@ -9,7 +9,7 @@ int main(int argc, char *argv[]){
   //createDatabase();
   //test();
   //testFetch();
-  closeLibrary();
+  //closeLibrary()s
 
   QApplication app(argc, argv);
   MainWindow window;

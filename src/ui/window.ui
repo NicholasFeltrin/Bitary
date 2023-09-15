@@ -124,7 +124,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QTableView" name="tableView_2">
+     <widget class="QTableView" name="mainTableView">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -163,39 +163,19 @@
        <string>Add</string>
       </property>
      </widget>
-    </widget>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>190</y>
-      <width>127</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <widget class="QWidget" name="tab">
-     <attribute name="title">
-      <string>Tab 1</string>
-     </attribute>
-     <widget class="QTableView" name="tableView">
+     <widget class="QPushButton" name="loadMore">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>10</y>
-        <width>256</width>
-        <height>192</height>
+        <x>280</x>
+        <y>130</y>
+        <width>80</width>
+        <height>22</height>
        </rect>
       </property>
+      <property name="text">
+       <string>load more</string>
+      </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
     </widget>
    </widget>
    <widget class="QCheckBox" name="checkBox">
@@ -227,6 +207,19 @@
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>0</y>
+      <width>80</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
@@ -235,7 +228,7 @@
      <x>0</x>
      <y>0</y>
      <width>500</width>
-     <height>17</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
