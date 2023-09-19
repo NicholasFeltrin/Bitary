@@ -1,6 +1,7 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
+#include "stdint.h"
 #include <time.h>
 
 
@@ -9,7 +10,7 @@
 
 
 typedef enum{
-  ONGOING,
+  ONGOING = 0,
   RETURNED
 }BorrowStatus ; 
 
@@ -21,19 +22,21 @@ typedef enum {
 
 
 typedef struct{
-  int bookID;
-  int borrowID;
+  uint32_t bookID;
+  uint32_t borrowID;
 
   char *title;
   char *libraryID;
 }Book ;
 
 typedef struct{
-  int borrowID;
-  int bookID;
-  BorrowStatus status;
+  uint32_t borrowID;
+  uint32_t bookID;
   time_t startTimestamp;
-  time_t endTimestamp;
+  union{
+    BorrowStatus status;
+    time_t endTimestamp;
+  };
 
   char *name;
   char *classSequence;
@@ -43,10 +46,14 @@ typedef struct{
 extern Book *dataBookBuffer;
 extern Borrow *dataBorrowBuffer;
 
-extern int initLibrary();
-extern int closeLibrary();
-extern int createDatabase();
-extern int loadBookDataChunk(Book **buffer, Scrolling scrolling);
+extern int LibraryInit();
+extern int LibraryClose();
+extern int LibraryCreateDatabase();
+extern int LibraryCreateBook(Book *book);
+extern int LibraryDeleteBook(int bookID);
+extern int LibraryCreateBorrow(Borrow *borrow);
+extern int LibraryLoadBookChunk(Book **buffer, Scrolling scrolling);
+extern int LibraryLoadBorrowChunk(Borrow **buffer, Scrolling scrolling);
 
 extern int testCreate();
 extern int testFetch();

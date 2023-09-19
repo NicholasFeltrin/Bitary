@@ -19,22 +19,32 @@ find_package(SQLite3 REQUIRED)
 
 set(QT_SOURCES
         src/ui/window.cpp
-        src/ui/mainTableModel.cpp
+        src/ui/models.cpp
         src/ui/buttons.cpp
+        src/ui/tests.cpp
         src/ui/window.h
-        src/ui/mainTableModel.h
+        src/ui/models.h
         src/ui/window.ui
+)
+
+set(TEST_SOURCES
+        src/tests/tests.c
+        src/tests/tests.h
 )
 
 set(LIBRARY_SOURCES
         src/library/library.c
-        src/library/helper.h
+        src/library/database.c
         src/library/library.h
+        src/library/database.h
+        src/library/helper.h
+        src/library/defs.h
 )
 
 set(PROJECT_SOURCES
         src/main.cpp
         ${LIBRARY_SOURCES}
+        ${TEST_SOURCES}
         ${QT_SOURCES}
 )
 
