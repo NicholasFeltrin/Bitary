@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>811</width>
-    <height>659</height>
+    <width>682</width>
+    <height>511</height>
    </rect>
   </property>
   <property name="font">
@@ -25,8 +25,8 @@
    <widget class="QListView" name="listView">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>30</y>
+      <x>0</x>
+      <y>0</y>
       <width>141</width>
       <height>451</height>
      </rect>
@@ -56,8 +56,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>30</y>
+      <x>140</x>
+      <y>0</y>
       <width>541</width>
       <height>451</height>
      </rect>
@@ -105,7 +105,7 @@
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgba(69, 116, 226, 1)</string>
+      <string notr="true">background-color: rgb(27, 134, 198)</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -128,29 +128,35 @@
     border: 1px solid #ccc;  
     border-radius: 10px;      
     padding: 4px;             
-    color: #333;            
-    font-size: 13px;    
-	font-opacity: 20%;
+    color: #718BAE;            
+    font-size: 11px;    
 }</string>
       </property>
       <property name="text">
-       <string>Cari</string>
+       <string>Search</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_5">
       <property name="geometry">
        <rect>
-        <x>320</x>
-        <y>24</y>
+        <x>310</x>
+        <y>28</y>
         <width>81</width>
-        <height>31</height>
+        <height>21</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">QPushButton {
+    background-color: #DDDDDD;
+    color: #5A5757;
+	border: 2px solid #DDDDDD;
+    border-radius: 5px;
+    font-size: 11px;
+}
+</string>
       </property>
       <property name="text">
-       <string>Tambah</string>
+       <string>Add</string>
       </property>
      </widget>
     </widget>
@@ -158,8 +164,8 @@
    <widget class="QLabel" name="BITARY">
     <property name="geometry">
      <rect>
-      <x>48</x>
-      <y>47</y>
+      <x>28</x>
+      <y>17</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -171,9 +177,11 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color:rgb(0, 51, 161);
+     <string notr="true">color: rgb(0, 53, 145);
 font-size:25px;
-border-radius: 38px;</string>
+border-radius: 38px;
+
+</string>
     </property>
     <property name="text">
      <string>BITARY</string>
@@ -182,8 +190,8 @@ border-radius: 38px;</string>
    <widget class="QPushButton" name="dataBukuButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>190</y>
+      <x>10</x>
+      <y>160</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -194,20 +202,19 @@ border-radius: 38px;</string>
     color: #5A5757;
 	border: 2px solid #DDDDDD;
     border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 13px;
+    font-size: 11px;
 }
 </string>
     </property>
     <property name="text">
-     <string>Data Buku    +</string>
+     <string>Book Data            +</string>
     </property>
    </widget>
    <widget class="QPushButton" name="dataPinjamButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>230</y>
+      <x>10</x>
+      <y>200</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -218,20 +225,19 @@ border-radius: 38px;</string>
     color: #5A5757;
 	border: 2px solid #DDDDDD;
     border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 13px;
+    font-size: 11px;
 }
 </string>
     </property>
     <property name="text">
-     <string>Data Pinjam  +</string>
+     <string>Borrowing Record  +</string>
     </property>
    </widget>
    <widget class="QPushButton" name="setelanButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>410</y>
+      <x>10</x>
+      <y>378</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -247,14 +253,14 @@ border-radius: 38px;</string>
 </string>
     </property>
     <property name="text">
-     <string>Setelan </string>
+     <string>Settings</string>
     </property>
    </widget>
    <widget class="QPushButton" name="penggunaButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>440</y>
+      <x>10</x>
+      <y>410</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -270,14 +276,14 @@ border-radius: 38px;</string>
 </string>
     </property>
     <property name="text">
-     <string>Pengguna</string>
+     <string>Users</string>
     </property>
    </widget>
    <widget class="QLabel" name="logoJB">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>90</y>
+      <x>30</x>
+      <y>60</y>
       <width>81</width>
       <height>81</height>
      </rect>
@@ -299,7 +305,7 @@ border-radius: 38px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>811</width>
+     <width>682</width>
      <height>24</height>
     </rect>
    </property>
