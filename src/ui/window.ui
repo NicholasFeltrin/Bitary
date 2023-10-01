@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1249</width>
-    <height>615</height>
+    <width>955</width>
+    <height>557</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,8 +65,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>20</y>
+      <x>110</x>
+      <y>30</y>
       <width>811</width>
       <height>481</height>
      </rect>
@@ -83,7 +83,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QTableView" name="mainTableView">
+    <widget class="MainTableView" name="mainTableView">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -91,6 +91,9 @@
        <width>681</width>
        <height>451</height>
       </rect>
+     </property>
+     <property name="toolTipDuration">
+      <number>0</number>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(87, 87, 87)</string>
@@ -114,7 +117,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>150</y>
+      <y>140</y>
       <width>80</width>
       <height>22</height>
      </rect>
@@ -130,7 +133,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1249</width>
+     <width>955</width>
      <height>19</height>
     </rect>
    </property>
@@ -154,6 +157,13 @@
    <addaction name="menuView"/>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MainTableView</class>
+   <extends>QTableView</extends>
+   <header>src/ui/mainTable.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>listView</tabstop>
   <tabstop>Books</tabstop>

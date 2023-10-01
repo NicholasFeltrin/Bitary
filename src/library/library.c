@@ -261,7 +261,7 @@ int LibraryLoadBookChunk(Book **buffer, Scrolling scrolling){
 
   // Finalize
   sqlite3_finalize(stmt);
-  return 0;
+  return i;
 }
 
 int LibraryLoadBorrowChunk(Borrow **buffer, Scrolling scrolling){
@@ -324,7 +324,7 @@ int LibraryLoadBorrowChunk(Borrow **buffer, Scrolling scrolling){
 
   // Finalize
   sqlite3_finalize(stmt);
-  return 0;
+  return i;
 }
 
 /*

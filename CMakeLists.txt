@@ -19,11 +19,11 @@ find_package(SQLite3 REQUIRED)
 
 set(QT_SOURCES
         src/ui/window.cpp
-        src/ui/models.cpp
+        src/ui/mainTable.cpp
         src/ui/buttons.cpp
         src/ui/tests.cpp
         src/ui/window.h
-        src/ui/models.h
+        src/ui/mainTable.h
         src/ui/window.ui
 )
 

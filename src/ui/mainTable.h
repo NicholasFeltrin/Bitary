@@ -1,64 +1,80 @@
-#ifndef MODELS_H
-#define MODELS_H
+#ifndef MAINTABLE_H
+#define MAINTABLE_H
 
 #include <QAbstractTableModel>
-#include <qabstractitemmodel.h>
-#include <qobjectdefs.h>
-#include <qwidget.h>
-#include <vector>
+#include <QTableView>
 extern "C" {
 #include "src/library/library.h"
 }
 
-class BookModel : public QAbstractTableModel
-{
-  Q_OBJECT
+class MainTableView;
+class MainModel;
+class BookModel;
+class BorrowModel;
 
-public:
-  explicit BookModel(QObject *parent = nullptr);
-  ~BookModel();
 
-  int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-  int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-  QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-  int loadMore(Scrolling scrolling);
+class MainTable {
+  public:
+    MainTable(MainTableView &uiTableView);
+    ~MainTable();
 
-private:
-  Book *data_;
+    void showBookTable();
+    void showBorrowTable();
+
+  private:
+    MainTableView *tableView;
+
+    MainModel *activeModel;
+    BookModel *bookModel;
+    BorrowModel *borrowModel;
 };
 
-class BorrowModel : public QAbstractTableModel
-{
+class MainTableView : public QTableView  {
   Q_OBJECT
 
-public:
-  explicit BorrowModel(QObject *parent = nullptr);
-  ~BorrowModel();
+  public:
+    MainTableView(QWidget *parent = nullptr);
 
-  int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-  int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-  QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-  int loadMore(Scrolling scrolling);
-
-private:
-  Borrow *data_;
+  public slots:
+    void scrollBarValueChanged(int value);
 };
 
-class MainTableView : public QTableView
-{
+class MainModel : public QAbstractTableModel {
   Q_OBJECT
-  
-public:
-  MainTableView(QWidget *parent = nullptr);
 
-protected:
- void scrollContentsBy(int dx, int dy) override;
+  public:
+    //virtual int loadMore(Scrolling scrolling);
 
-private:
-  QAbstractTableModel *activeModel;
-  BookModel bookmodel;
-  BorrowModel borrowModel;
+  protected:
+    int rows;
+    void *data_;
+};
+
+class BookModel : public MainModel {
+  Q_OBJECT
+
+  public:
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    int loadMore(Scrolling scrolling);
+
+  private:
+    Book *data_;
+};
+
+class BorrowModel : public MainModel {
+  Q_OBJECT
+
+  public:
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    int loadMore(Scrolling scrolling);
+
+  private:
+    Borrow *data_;
 };
 
 
-#endif // !MODELS_H
+#endif

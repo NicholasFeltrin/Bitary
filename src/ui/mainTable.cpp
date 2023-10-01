@@ -1,37 +1,72 @@
 #include <QAbstractTableModel>
+#include <QTableView>
+#include <QScrollBar>
+#include <cstdio>
 #include <ctime>
-#include "models.h"
-#include "src/library/helper.h"
+#include <qabstractitemmodel.h>
+#include <qtableview.h>
+#include "mainTable.h"
+#include "src/ui/window.h"
 extern "C"{
 #include "src/library/library.h"
+#include "src/library/helper.h"
 }
 
-BookModel::BookModel(QObject *parent)
-  : QAbstractTableModel(parent)
-{
-  LibraryLoadBookChunk(&dataBookBuffer, LOADBEGINNING);
-  data_ = dataBookBuffer;
+
+MainTable::MainTable(MainTableView &uiTableView) {
+  tableView = &uiTableView;
+
+  bookModel = new BookModel;
+  borrowModel = new BorrowModel;
 }
 
-BookModel::~BookModel()
-{
-  // Close
+MainTable::~MainTable() {
+  delete bookModel;
+  delete borrowModel;
 }
 
-int BookModel::rowCount(const QModelIndex &parent) const
-{
+MainTableView::MainTableView(QWidget *parent) : QTableView(parent) {
+  connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &MainTableView::scrollBarValueChanged);
+}
+
+void MainTable::showBookTable() {
+  int retval = bookModel->loadMore(LOADBEGINNING);
+  CHECK(retval != 0, "Error loading books from database", return);
+  tableView->setModel(bookModel);
+  //activeModel = bookModel;
+}
+
+void MainTable::showBorrowTable() {
+  int retval = borrowModel->loadMore(LOADBEGINNING);
+  CHECK(retval != 0, "Error loading borrows from database", return);
+  tableView->setModel(borrowModel);
+  //activeModel = borrowModel;
+}
+
+void MainTableView::scrollBarValueChanged(int value) {
+  QTableView::verticalScrollbarValueChanged(value);
+
+  int maximumValue = verticalScrollBar()->maximum();
+  int threshold = 0.9 * maximumValue;
+
+  if (value >= threshold) {
+    //->
+    //mainTable->activeModel->loadMore(LOADNEXT) ;
+  }
+}
+
+
+int BookModel::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
-  return BOOK_CHUNK;
+  return rows;
 }
 
-int BookModel::columnCount(const QModelIndex &parent) const
-{
+int BookModel::columnCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
   return 4;
 }
 
-QVariant BookModel::data(const QModelIndex &index, int role) const
-{
+QVariant BookModel::data(const QModelIndex &index, int role) const {
   if (role == Qt::DisplayRole) {
     Book book = data_[index.row()];
     switch (index.column()) {
@@ -40,9 +75,9 @@ QVariant BookModel::data(const QModelIndex &index, int role) const
       case 1:
         return book.borrowID;
       case 2:
-        return book.title;
+        return QString(book.title);
       case 3:
-        return book.libraryID;
+        return QString(book.libraryID);
       default:
         return QVariant();
     }
@@ -51,45 +86,43 @@ QVariant BookModel::data(const QModelIndex &index, int role) const
   return QVariant();
 }
 
-int BookModel::loadBooks(Scrolling scrolling)
-{
+int BookModel::loadMore(Scrolling scrolling) {
   int retval = 0;
-    
-  beginInsertRows(QModelIndex(), 0, BOOK_CHUNK - 1);
+  
   retval = LibraryLoadBookChunk(&data_, scrolling);
-  CHECK(retval != 0, "Error LibraryLoadBookChunk()", return -1);
-  endInsertRows();
+  CHECK(retval == -1, "Error LibraryLoadBookChunk()", return -1);
+
+  if(scrolling == LOADBEGINNING && rows < retval){
+    beginInsertRows(QModelIndex(), 0, (retval-rows)-1); endInsertRows();
+    rows = retval;
+  }else if(scrolling == LOADBEGINNING && rows > retval){
+    beginRemoveRows(QModelIndex(), rows-(rows-retval), rows-1);
+    rows = retval;
+  }else if(scrolling == LOADNEXT){
+    beginInsertRows(QModelIndex(), retval-rows, (rows+retval)-1); endInsertRows();
+    rows += retval;
+  }
+  
+  // refresh not needed 
+  //QModelIndex topLeft = createIndex(0, 0);
+  //QModelIndex bottomRight = createIndex(rowCount() - 1, columnCount() - 1);
+  //emit dataChanged(topLeft, bottomRight);
 
   return 0;
 }
 
 
-BorrowModel::BorrowModel(QObject *parent)
-  : QAbstractTableModel(parent)
-{
-  LibraryLoadBorrowChunk(&dataBorrowBuffer, LOADBEGINNING);
-  data_ = dataBorrowBuffer;
-}
-
-BorrowModel::~BorrowModel()
-{
-  // Close
-}
-
-int BorrowModel::rowCount(const QModelIndex &parent) const
-{
+int BorrowModel::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
-  return BORROW_CHUNK;
+  return rows;
 }
 
-int BorrowModel::columnCount(const QModelIndex &parent) const
-{
+int BorrowModel::columnCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
   return 6;
 }
 
-QVariant BorrowModel::data(const QModelIndex &index, int role) const
-{
+QVariant BorrowModel::data(const QModelIndex &index, int role) const {
   if (role == Qt::DisplayRole) {
     Borrow borrow = data_[index.row()];
     switch (index.column()) {
@@ -98,13 +131,13 @@ QVariant BorrowModel::data(const QModelIndex &index, int role) const
       case 1:
         return borrow.bookID;
       case 2:
-        return asctime(localtime(&borrow.startTimestamp));
+        return QString(asctime(localtime(&borrow.startTimestamp)));
       case 3:
-        return asctime(localtime(&borrow.endTimestamp));
+        return QString(asctime(localtime(&borrow.endTimestamp)));
       case 4:
-        return borrow.name;
+        return QString(borrow.name);
       case 5:
-        return borrow.classSequence;
+        return QString(borrow.classSequence);
       default:
         return QVariant();
     }
@@ -113,15 +146,24 @@ QVariant BorrowModel::data(const QModelIndex &index, int role) const
   return QVariant();
 }
 
-int BorrowModel::loadBorrows(Scrolling scrolling)
-{
+int BorrowModel::loadMore(Scrolling scrolling) {
   int retval = 0;
 
-  beginInsertRows(QModelIndex(), 0, BORROW_CHUNK - 1);
   retval = LibraryLoadBorrowChunk(&data_, scrolling);
-  CHECK(retval != 0, "Error LibraryLoadBorrowChunk()", return -1);
-  endInsertRows();
+  CHECK(retval == -1, "Error LibraryLoadBorrowChunk()", return -1);
+
+  if(scrolling == LOADBEGINNING && rows < retval){
+    beginInsertRows(QModelIndex(), 0, (retval-rows)-1); endInsertRows();
+    rows = retval;
+  }else if(scrolling == LOADBEGINNING && rows > retval){
+    beginRemoveRows(QModelIndex(), rows-(rows-retval), rows-1);
+    rows = retval;
+  }
+  
+  // refresh not needed 
+  //QModelIndex topLeft = createIndex(0, 0);
+  //QModelIndex bottomRight = createIndex(rowCount() - 1, columnCount() - 1);
+  //emit dataChanged(topLeft, bottomRight);
 
   return 0;
 }
-

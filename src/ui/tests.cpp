@@ -7,5 +7,5 @@ extern "C" {
 
 void MainWindow::on_testcreate_clicked()
 {
-  TestCreateBooks(100);
+  TestCreateBooks(5);
 }
