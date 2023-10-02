@@ -384,7 +384,7 @@ text-align: center;</string>
               <number>20</number>
              </property>
              <item row="0" column="0">
-              <widget class="MainTableView" name="mainTableView">
+              <widget class="MainTable" name="mainTableView">
                <property name="font">
                 <font>
                  <family>PT Sans Caption</family>
@@ -399,6 +399,15 @@ text-align: center;</string>
                <property name="pixmap" stdset="0">
                 <pixmap>../../assets/logoJB.png</pixmap>
                </property>
+               <attribute name="horizontalHeaderCascadingSectionResizes">
+                <bool>true</bool>
+               </attribute>
+               <attribute name="verticalHeaderCascadingSectionResizes">
+                <bool>true</bool>
+               </attribute>
+               <attribute name="verticalHeaderStretchLastSection">
+                <bool>false</bool>
+               </attribute>
               </widget>
              </item>
             </layout>
@@ -444,7 +453,7 @@ text-align: center;</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MainTableView</class>
+   <class>MainTable</class>
    <extends>QTableView</extends>
    <header>src/ui/mainTable.h</header>
   </customwidget>

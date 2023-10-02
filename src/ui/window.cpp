@@ -4,7 +4,9 @@
 #include "mainTable.h"
 extern "C" {
 #include "src/library/library.h"
+#ifdef DEBUG
 #include "src/tests/tests.h"
+#endif // DEBUG
 }
 
 
@@ -14,7 +16,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   LibraryInit();
 
   // Create the main table
-  mainTable = new MainTable(*ui->mainTableView);
+  mainTable = ui->mainTableView;
+
+#ifdef DEBUG
+  startUpTest();
+#endif // DEBUG
 }
 
 

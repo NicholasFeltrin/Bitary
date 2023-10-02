@@ -6,6 +6,16 @@
 
 extern void TestCreateBooks(size_t n);
 
+void startUpTest(){
+  Book *ptr;
+
+  TestCreateBooks(128);
+  //LibraryLoadBookChunk(&ptr, LOADBEGINNING);
+  //TestCreateBooks(128);
+  //LibraryLoadBookChunk(&ptr, LOADNEXT);
+  //printf("PASS"); fflush(stdout);
+}
+
 void TestCreateBooks(size_t n){
   char word[5] = "AAAA";
 

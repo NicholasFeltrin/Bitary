@@ -1,9 +1,13 @@
 #include <QAbstractTableModel>
+#include <QHeaderView>
 #include <QTableView>
 #include <QScrollBar>
 #include <cstdio>
 #include <ctime>
 #include <qabstractitemmodel.h>
+#include <qnamespace.h>
+#include <qobject.h>
+#include <qscrollbar.h>
 #include <qtableview.h>
 #include "mainTable.h"
 #include "src/ui/window.h"
@@ -13,46 +17,48 @@ extern "C"{
 }
 
 
-MainTable::MainTable(MainTableView &uiTableView) {
-  tableView = &uiTableView;
-
+MainTable::MainTable(QWidget *parent) {
   bookModel = new BookModel;
   borrowModel = new BorrowModel;
-}
 
-MainTable::~MainTable() {
-  delete bookModel;
-  delete borrowModel;
-}
+  connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &MainTable::scrollBarValueChanged);
 
-MainTableView::MainTableView(QWidget *parent) : QTableView(parent) {
-  connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &MainTableView::scrollBarValueChanged);
+  // Stretch Columns to fit entire table view width
+  horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 void MainTable::showBookTable() {
   int retval = bookModel->loadMore(LOADBEGINNING);
   CHECK(retval != 0, "Error loading books from database", return);
-  tableView->setModel(bookModel);
-  //activeModel = bookModel;
+  setModel(bookModel);
+  activeModel = bookModel;
 }
 
 void MainTable::showBorrowTable() {
   int retval = borrowModel->loadMore(LOADBEGINNING);
   CHECK(retval != 0, "Error loading borrows from database", return);
-  tableView->setModel(borrowModel);
-  //activeModel = borrowModel;
+  setModel(borrowModel);
+  activeModel = borrowModel;
 }
 
-void MainTableView::scrollBarValueChanged(int value) {
+void MainTable::loadMore() {
+  activeModel->loadMore(LOADNEXT);
+}
+
+void MainTable::scrollBarValueChanged(int value) {
   QTableView::verticalScrollbarValueChanged(value);
 
   int maximumValue = verticalScrollBar()->maximum();
   int threshold = 0.9 * maximumValue;
 
   if (value >= threshold) {
-    //->
-    //mainTable->activeModel->loadMore(LOADNEXT) ;
+    loadMore();
   }
+}
+
+MainTable::~MainTable() {
+  delete bookModel;
+  delete borrowModel;
 }
 
 
@@ -63,7 +69,7 @@ int BookModel::rowCount(const QModelIndex &parent) const {
 
 int BookModel::columnCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
-  return 4;
+  return 3;
 }
 
 QVariant BookModel::data(const QModelIndex &index, int role) const {
@@ -71,18 +77,28 @@ QVariant BookModel::data(const QModelIndex &index, int role) const {
     Book book = data_[index.row()];
     switch (index.column()) {
       case 0:
-        return book.bookID;
-      case 1:
-        return book.borrowID;
-      case 2:
         return QString(book.title);
-      case 3:
+      case 1:
         return QString(book.libraryID);
+      case 2:
+        if(book.borrowID != 0){
+          return "Borrowed";
+        }else{
+          return "Avaliable";
+        }
       default:
         return QVariant();
     }
   }
 
+  return QVariant();
+}
+
+QVariant BookModel::headerData(int section, Qt::Orientation orientation, int role) const {
+  if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
+    QStringList columnNames = { "Title", "Library ID", "Status"};
+    return columnNames.value(section);
+  }
   return QVariant();
 }
 
@@ -143,6 +159,14 @@ QVariant BorrowModel::data(const QModelIndex &index, int role) const {
     }
   }
 
+  return QVariant();
+}
+
+QVariant BorrowModel::headerData(int section, Qt::Orientation orientation, int role) const {
+  if (role == Qt::DisplayRole) {
+    QStringList columnNames = { "Title", "Library ID", "Status"};
+    return columnNames.value(section);
+  }
   return QVariant();
 }
 
