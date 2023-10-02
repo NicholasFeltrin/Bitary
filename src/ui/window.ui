@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>811</width>
-    <height>659</height>
+    <width>948</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="font">
@@ -22,108 +22,322 @@
    <pixmap/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QListView" name="listView">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>141</width>
-      <height>451</height>
-     </rect>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
     </property>
-    <property name="font">
-     <font>
-      <pointsize>-1</pointsize>
-     </font>
+    <property name="topMargin">
+     <number>0</number>
     </property>
-    <property name="styleSheet">
-     <string notr="true">QListView {
-    background-color: rgba(255, 255, 255, 1);   
-    color: #333;              
-    font-size: 14px;         
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QWidget" name="mainWidget" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QWidget" name="navBar" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255. 1);  </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QFrame" name="infoFrame">
+            <property name="minimumSize">
+             <size>
+              <width>118</width>
+              <height>159</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>175</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255. 1);  </string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>20</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+              <widget class="QLabel" name="BITARY">
+               <property name="font">
+                <font>
+                 <family>PT Sans Caption</family>
+                 <pointsize>-1</pointsize>
+                </font>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:rgb(0, 51, 161);
+font-size:25px;
+border-radius: 38px;
+text-align: center;</string>
+               </property>
+               <property name="text">
+                <string>BITARY</string>
+               </property>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="logoJB">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>100</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap>../../assets/logoJB.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="navigationFrame">
+            <property name="minimumSize">
+             <size>
+              <width>128</width>
+              <height>132</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255. 1);  </string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>20</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="dataBukuButton">
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #DDDDDD;
+    color: #5A5757;
+	border: 2px solid #DDDDDD;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 13px;
 }
-
-
 </string>
-    </property>
-    <property name="pixmap" stdset="0">
-     <pixmap>../../../../15018bfd-502e-4304-a968-533f775c4c1f.jpeg</pixmap>
-    </property>
-   </widget>
-   <widget class="QFrame" name="PinjamFrame">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>30</y>
-      <width>541</width>
-      <height>451</height>
-     </rect>
-    </property>
-    <property name="mouseTracking">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgba(255, 255, 255, 1)</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QTableView" name="tableView_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>100</y>
-       <width>521</width>
-       <height>341</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>PT Sans Caption</family>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #D9D9D9;</string>
-     </property>
-     <property name="pixmap" stdset="0">
-      <pixmap>../../assets/logoJB.png</pixmap>
-     </property>
-    </widget>
-    <widget class="QFrame" name="frame">
-     <property name="geometry">
-      <rect>
-       <x>-70</x>
-       <y>0</y>
-       <width>611</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color:rgba(69, 116, 226, 1)</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <widget class="QLineEdit" name="searchBar">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>25</y>
-        <width>201</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLineEdit {
+               </property>
+               <property name="text">
+                <string>Data Buku    +</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="dataPinjamButton">
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #DDDDDD;
+    color: #5A5757;
+	border: 2px solid #DDDDDD;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 13px;
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Data Pinjam  +</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="setelanButton">
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+     color: #5A5757;
+ 	border: 1px solid darkgrey;
+    border-radius: 5px;
+    padding: 1px 1px;
+    font-size: 13px;
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Setelan </string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="penggunaButton">
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    color: #5A5757;
+ 	border: 1px solid darkgrey;
+    border-radius: 5px;
+    padding: 1px 1px;
+    font-size: 13px;
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Pengguna</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="mainWindowFrame" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="topBar">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>80</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:rgba(69, 116, 226, 1)</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLineEdit" name="searchBar">
+               <property name="styleSheet">
+                <string notr="true">QLineEdit {
     background-color: #f0f0f0; 
     border: 1px solid #ccc;  
     border-radius: 10px;      
@@ -132,175 +346,79 @@
     font-size: 13px;    
 	font-opacity: 20%;
 }</string>
-      </property>
-      <property name="text">
-       <string>Cari</string>
-      </property>
+               </property>
+               <property name="text">
+                <string>Cari</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_5">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>Tambah</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="tableBar" native="true">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255. 1);  </string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout">
+             <property name="leftMargin">
+              <number>20</number>
+             </property>
+             <property name="topMargin">
+              <number>20</number>
+             </property>
+             <property name="rightMargin">
+              <number>20</number>
+             </property>
+             <property name="bottomMargin">
+              <number>20</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="MainTableView" name="mainTableView">
+               <property name="font">
+                <font>
+                 <family>PT Sans Caption</family>
+                </font>
+               </property>
+               <property name="autoFillBackground">
+                <bool>true</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #D9D9D9;</string>
+               </property>
+               <property name="pixmap" stdset="0">
+                <pixmap>../../assets/logoJB.png</pixmap>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="QPushButton" name="pushButton_5">
-      <property name="geometry">
-       <rect>
-        <x>320</x>
-        <y>24</y>
-        <width>81</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string>Tambah</string>
-      </property>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QLabel" name="BITARY">
-    <property name="geometry">
-     <rect>
-      <x>48</x>
-      <y>47</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>PT Sans Caption</family>
-      <pointsize>-1</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color:rgb(0, 51, 161);
-font-size:25px;
-border-radius: 38px;</string>
-    </property>
-    <property name="text">
-     <string>BITARY</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="dataBukuButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>190</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: #DDDDDD;
-    color: #5A5757;
-	border: 2px solid #DDDDDD;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 13px;
-}
-</string>
-    </property>
-    <property name="text">
-     <string>Data Buku    +</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="dataPinjamButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>230</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: #DDDDDD;
-    color: #5A5757;
-	border: 2px solid #DDDDDD;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 13px;
-}
-</string>
-    </property>
-    <property name="text">
-     <string>Data Pinjam  +</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="setelanButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>410</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-     color: #5A5757;
- 	border: 1px solid darkgrey;
-    border-radius: 5px;
-    padding: 1px 1px;
-    font-size: 13px;
-}
-</string>
-    </property>
-    <property name="text">
-     <string>Setelan </string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="penggunaButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>440</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-    color: #5A5757;
- 	border: 1px solid darkgrey;
-    border-radius: 5px;
-    padding: 1px 1px;
-    font-size: 13px;
-}
-</string>
-    </property>
-    <property name="text">
-     <string>Pengguna</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="logoJB">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>90</y>
-      <width>81</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../../assets/logoJB.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>811</width>
-     <height>24</height>
+     <width>948</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -322,10 +440,15 @@ border-radius: 38px;</string>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <tabstops>
-  <tabstop>listView</tabstop>
- </tabstops>
+ <customwidgets>
+  <customwidget>
+   <class>MainTableView</class>
+   <extends>QTableView</extends>
+   <header>src/ui/mainTable.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

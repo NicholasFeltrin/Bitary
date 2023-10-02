@@ -20,10 +20,10 @@ public:
 
 
 private slots:
-  void on_testcreate_clicked();
+  void on_setelanButton_clicked();
 
-  void on_Books_clicked();
-  void on_Borrows_clicked();
+  void on_dataBukuButton_clicked();
+  void on_dataPinjamButton_clicked();
 
 private:
   Ui::MainWindow *ui;

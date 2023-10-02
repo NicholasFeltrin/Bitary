@@ -5,7 +5,7 @@ extern "C" {
 #include "src/tests/tests.h"
 }
 
-void MainWindow::on_testcreate_clicked()
+void MainWindow::on_setelanButton_clicked()
 {
   TestCreateBooks(5);
 }
