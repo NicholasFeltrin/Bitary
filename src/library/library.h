@@ -16,6 +16,7 @@ typedef enum{
 
 typedef enum {
   LOADBEGINNING,
+  LOADREFRESH,
   LOADNEXT,
   LOADPREV
 }Scrolling ;
@@ -48,7 +49,7 @@ extern Borrow *dataBorrowBuffer;
 
 extern int LibraryInit();
 extern int LibraryClose();
-extern int LibraryCreateDatabase();
+extern int LibraryCreateDatabase(char *path);
 extern int LibraryCreateBook(Book *book);
 extern int LibraryDeleteBook(int bookID);
 extern int LibraryCreateBorrow(Borrow *borrow);

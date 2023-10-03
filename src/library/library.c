@@ -32,7 +32,6 @@ char *dataBorrowNameBuffer;
 char *dataBorrowClassSequenceBuffer;
 
 
-
 int LibraryInit(){
   int retval;
   // Add Database (not connected)

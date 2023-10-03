@@ -1,0 +1,56 @@
+[
+{
+  "directory": "/home/work/scripts/Bitary/development/Bitary/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/work/scripts/Bitary/development/Bitary/build -I/home/work/scripts/Bitary/development/Bitary -I/home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib64/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui  -O2 -O3 -DNDEBUG -std=gnu++17 -fPIC -o CMakeFiles/Bitary.dir/Bitary_autogen/mocs_compilation.cpp.o -c /home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/mocs_compilation.cpp",
+  "file": "/home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/Bitary.dir/Bitary_autogen/mocs_compilation.cpp.o"
+},
+{
+  "directory": "/home/work/scripts/Bitary/development/Bitary/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/work/scripts/Bitary/development/Bitary/build -I/home/work/scripts/Bitary/development/Bitary -I/home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib64/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui  -O2 -O3 -DNDEBUG -std=gnu++17 -fPIC -o CMakeFiles/Bitary.dir/src/main.cpp.o -c /home/work/scripts/Bitary/development/Bitary/src/main.cpp",
+  "file": "/home/work/scripts/Bitary/development/Bitary/src/main.cpp",
+  "output": "CMakeFiles/Bitary.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/work/scripts/Bitary/development/Bitary/build",
+  "command": "/usr/bin/cc -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/work/scripts/Bitary/development/Bitary/build -I/home/work/scripts/Bitary/development/Bitary -I/home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib64/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui  -O2 -O3 -DNDEBUG -fPIC -o CMakeFiles/Bitary.dir/src/library/library.c.o -c /home/work/scripts/Bitary/development/Bitary/src/library/library.c",
+  "file": "/home/work/scripts/Bitary/development/Bitary/src/library/library.c",
+  "output": "CMakeFiles/Bitary.dir/src/library/library.c.o"
+},
+{
+  "directory": "/home/work/scripts/Bitary/development/Bitary/build",
+  "command": "/usr/bin/cc -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/work/scripts/Bitary/development/Bitary/build -I/home/work/scripts/Bitary/development/Bitary -I/home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib64/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui  -O2 -O3 -DNDEBUG -fPIC -o CMakeFiles/Bitary.dir/src/library/database.c.o -c /home/work/scripts/Bitary/development/Bitary/src/library/database.c",
+  "file": "/home/work/scripts/Bitary/development/Bitary/src/library/database.c",
+  "output": "CMakeFiles/Bitary.dir/src/library/database.c.o"
+},
+{
+  "directory": "/home/work/scripts/Bitary/development/Bitary/build",
+  "command": "/usr/bin/cc -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/work/scripts/Bitary/development/Bitary/build -I/home/work/scripts/Bitary/development/Bitary -I/home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib64/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui  -O2 -O3 -DNDEBUG -fPIC -o CMakeFiles/Bitary.dir/src/tests/tests.c.o -c /home/work/scripts/Bitary/development/Bitary/src/tests/tests.c",
+  "file": "/home/work/scripts/Bitary/development/Bitary/src/tests/tests.c",
+  "output": "CMakeFiles/Bitary.dir/src/tests/tests.c.o"
+},
+{
+  "directory": "/home/work/scripts/Bitary/development/Bitary/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/work/scripts/Bitary/development/Bitary/build -I/home/work/scripts/Bitary/development/Bitary -I/home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib64/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui  -O2 -O3 -DNDEBUG -std=gnu++17 -fPIC -o CMakeFiles/Bitary.dir/src/ui/window.cpp.o -c /home/work/scripts/Bitary/development/Bitary/src/ui/window.cpp",
+  "file": "/home/work/scripts/Bitary/development/Bitary/src/ui/window.cpp",
+  "output": "CMakeFiles/Bitary.dir/src/ui/window.cpp.o"
+},
+{
+  "directory": "/home/work/scripts/Bitary/development/Bitary/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/work/scripts/Bitary/development/Bitary/build -I/home/work/scripts/Bitary/development/Bitary -I/home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib64/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui  -O2 -O3 -DNDEBUG -std=gnu++17 -fPIC -o CMakeFiles/Bitary.dir/src/ui/mainTable.cpp.o -c /home/work/scripts/Bitary/development/Bitary/src/ui/mainTable.cpp",
+  "file": "/home/work/scripts/Bitary/development/Bitary/src/ui/mainTable.cpp",
+  "output": "CMakeFiles/Bitary.dir/src/ui/mainTable.cpp.o"
+},
+{
+  "directory": "/home/work/scripts/Bitary/development/Bitary/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/work/scripts/Bitary/development/Bitary/build -I/home/work/scripts/Bitary/development/Bitary -I/home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib64/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui  -O2 -O3 -DNDEBUG -std=gnu++17 -fPIC -o CMakeFiles/Bitary.dir/src/ui/buttons.cpp.o -c /home/work/scripts/Bitary/development/Bitary/src/ui/buttons.cpp",
+  "file": "/home/work/scripts/Bitary/development/Bitary/src/ui/buttons.cpp",
+  "output": "CMakeFiles/Bitary.dir/src/ui/buttons.cpp.o"
+},
+{
+  "directory": "/home/work/scripts/Bitary/development/Bitary/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/work/scripts/Bitary/development/Bitary/build -I/home/work/scripts/Bitary/development/Bitary -I/home/work/scripts/Bitary/development/Bitary/build/Bitary_autogen/include -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6 -isystem /usr/include/qt6/QtCore -isystem /usr/lib64/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtGui  -O2 -O3 -DNDEBUG -std=gnu++17 -fPIC -o CMakeFiles/Bitary.dir/src/ui/tests.cpp.o -c /home/work/scripts/Bitary/development/Bitary/src/ui/tests.cpp",
+  "file": "/home/work/scripts/Bitary/development/Bitary/src/ui/tests.cpp",
+  "output": "CMakeFiles/Bitary.dir/src/ui/tests.cpp.o"
+}
+]

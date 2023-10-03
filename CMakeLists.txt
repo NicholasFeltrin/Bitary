@@ -20,12 +20,19 @@ find_package(SQLite3 REQUIRED)
 set(QT_SOURCES
         src/ui/window.cpp
         src/ui/mainTable.cpp
-        src/ui/buttons.cpp
+        src/ui/dialog.cpp
         src/ui/tests.cpp
         src/ui/window.h
         src/ui/mainTable.h
-        src/ui/window.ui
+        src/ui/dialog.h
 )
+
+set(QT_FORMS
+        src/forms/window.ui
+        src/forms/addBookPopUpWindow.ui
+        src/forms/borrowBookPopUpWindow.ui
+        src/forms/logInPageWindow.ui
+  )
 
 set(TEST_SOURCES
         src/tests/tests.c
@@ -46,6 +53,7 @@ set(PROJECT_SOURCES
         ${LIBRARY_SOURCES}
         ${TEST_SOURCES}
         ${QT_SOURCES}
+        ${QT_FORMS}
 )
 
 # Default to Release build if not specified

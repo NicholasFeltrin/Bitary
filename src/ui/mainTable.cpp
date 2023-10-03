@@ -4,13 +4,8 @@
 #include <QScrollBar>
 #include <cstdio>
 #include <ctime>
-#include <qabstractitemmodel.h>
-#include <qnamespace.h>
-#include <qobject.h>
-#include <qscrollbar.h>
-#include <qtableview.h>
 #include "mainTable.h"
-#include "src/ui/window.h"
+#include "dialog.h"
 extern "C"{
 #include "src/library/library.h"
 #include "src/library/helper.h"
@@ -54,6 +49,10 @@ void MainTable::scrollBarValueChanged(int value) {
   if (value >= threshold) {
     loadMore();
   }
+}
+
+void MainTable::addData() {
+  activeModel->addData(this);
 }
 
 MainTable::~MainTable() {
@@ -114,17 +113,23 @@ int BookModel::loadMore(Scrolling scrolling) {
   }else if(scrolling == LOADBEGINNING && rows > retval){
     beginRemoveRows(QModelIndex(), rows-(rows-retval), rows-1);
     rows = retval;
+  }else if(scrolling == LOADREFRESH){
+    beginInsertRows(QModelIndex(), 0, 1); endInsertRows();
   }else if(scrolling == LOADNEXT){
     beginInsertRows(QModelIndex(), retval-rows, (rows+retval)-1); endInsertRows();
     rows += retval;
   }
   
-  // refresh not needed 
-  //QModelIndex topLeft = createIndex(0, 0);
-  //QModelIndex bottomRight = createIndex(rowCount() - 1, columnCount() - 1);
-  //emit dataChanged(topLeft, bottomRight);
+  QModelIndex topLeft = createIndex(0, 0);
+  QModelIndex bottomRight = createIndex(rowCount() - 1, columnCount() - 1);
+  emit dataChanged(topLeft, bottomRight);
 
   return 0;
+}
+
+void BookModel::addData(MainTable *parent) {
+  AddBookDialog *addBookDialog = new AddBookDialog(parent);
+  addBookDialog->show();
 }
 
 
@@ -190,4 +195,9 @@ int BorrowModel::loadMore(Scrolling scrolling) {
   //emit dataChanged(topLeft, bottomRight);
 
   return 0;
+}
+
+void BorrowModel::addData(MainTable *parent) {
+  AddBorrowDialog *addBorrowDialog = new AddBorrowDialog(parent);
+  addBorrowDialog->show();
 }

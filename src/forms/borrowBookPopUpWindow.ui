@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>AddBorrowDialog</class>
+ <widget class="QDialog" name="AddBorrowDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -21,7 +21,15 @@
   <property name="pixmap" stdset="0">
    <pixmap/>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="centralwidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>411</width>
+     <height>451</height>
+    </rect>
+   </property>
    <widget class="QFrame" name="PinjamFrame">
     <property name="enabled">
      <bool>true</bool>
@@ -64,6 +72,7 @@
       <font>
        <family>Arial</family>
        <pointsize>-1</pointsize>
+       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -113,6 +122,7 @@ border-radius: 38px;</string>
       <font>
        <family>Arial</family>
        <pointsize>-1</pointsize>
+       <weight>50</weight>
        <bold>false</bold>
       </font>
      </property>
@@ -163,6 +173,7 @@ border-radius: 38px;
       <font>
        <family>Arial</family>
        <pointsize>-1</pointsize>
+       <weight>50</weight>
        <bold>false</bold>
       </font>
      </property>
@@ -189,6 +200,7 @@ border-radius: 38px;
       <font>
        <family>Arial</family>
        <pointsize>-1</pointsize>
+       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -229,6 +241,7 @@ border-radius: 38px;
       <font>
        <family>Arial</family>
        <pointsize>-1</pointsize>
+       <weight>50</weight>
        <bold>false</bold>
       </font>
      </property>
@@ -244,7 +257,16 @@ border-radius: 38px;
     </widget>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>3</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>

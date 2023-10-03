@@ -352,7 +352,7 @@ text-align: center;</string>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_5">
+              <widget class="QPushButton" name="mainAddBtn">
                <property name="styleSheet">
                 <string notr="true"/>
                </property>

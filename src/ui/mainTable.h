@@ -23,6 +23,7 @@ class MainTable : public QTableView {
 
     void showBookTable();
     void showBorrowTable();
+    void addData();
 
   public slots:
     void scrollBarValueChanged(int value);
@@ -41,6 +42,7 @@ class MainModel : public QAbstractTableModel {
 
   public:
     virtual int loadMore(Scrolling scrolling) = 0;
+    virtual void addData(MainTable *parent) = 0;
 
   protected:
     int rows;
@@ -56,6 +58,7 @@ class BookModel : public MainModel {
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
     int loadMore(Scrolling scrolling) override;
+    void addData(MainTable *parent) override;
 
   private:
     Book *data_;
@@ -70,6 +73,7 @@ class BorrowModel : public MainModel {
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
     int loadMore(Scrolling scrolling) override;
+    void addData(MainTable *parent) override;
 
   private:
     Borrow *data_;

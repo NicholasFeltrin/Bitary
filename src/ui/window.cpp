@@ -1,5 +1,5 @@
 #include <QMainWindow>
-#include "ui_window.h"
+#include "../forms/ui_window.h"
 #include "window.h"
 #include "mainTable.h"
 extern "C" {
@@ -17,9 +17,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
   // Create the main table
   mainTable = ui->mainTableView;
+  mainTable->showBookTable();
 
 #ifdef DEBUG
-  startUpTest();
+  //startUpTest();
 #endif // DEBUG
 }
 
@@ -31,4 +32,19 @@ MainWindow::~MainWindow() {
 }
 
 
+void MainWindow::on_dataBukuButton_clicked() {
+  mainTable->showBookTable();
+}
+
+
+void MainWindow::on_dataPinjamButton_clicked() {
+  mainTable->showBorrowTable();
+}
+
+void MainWindow::on_mainAddBtn_clicked() {
+  mainTable->addData();
+}
+
 #include "window.moc"
+
+
