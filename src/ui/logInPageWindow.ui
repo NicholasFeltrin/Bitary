@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>683</width>
+    <height>509</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>PT Serif Caption</family>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Window</string>
+  </property>
+  <property name="pixmap" stdset="0">
+   <pixmap/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="PinjamFrame">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>681</width>
+      <height>451</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(255, 255, 255, 1)</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QFrame" name="frame">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>-30</y>
+       <width>321</width>
+       <height>511</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+    background: #4574E2;
+	transform: skewX(45deg);  
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                 stop:0 #025F96, stop:1 #239FE9);
+
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="BITARY">
+      <property name="geometry">
+       <rect>
+        <x>81</x>
+        <y>340</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>PT Sans Caption</family>
+        <pointsize>-1</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:white;
+font-size:50px;
+border-radius: 38px;
+background-color: none;</string>
+      </property>
+      <property name="text">
+       <string>BITARY</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="logoJB">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>100</y>
+        <width>171</width>
+        <height>161</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: none;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../assets/logoJB.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="BITARY_2">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>40</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>-1</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgba(53, 70, 101, 1);
+font-size:25px;
+border-radius: 38px;</string>
+     </property>
+     <property name="text">
+      <string>Log In</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="BITARY_7">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>100</y>
+       <width>41</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>-1</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:#354665;
+font-size:15px;
+border-radius: 20px;
+</string>
+     </property>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_5">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>122</y>
+       <width>311</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit {
+    background-color: #ffffff; 
+    border: 1px solid #A6BCDA;   
+    border-radius: 5px;      
+    padding: 5px;              
+    font-size: 12px;   
+	color : #718BAE
+ 
+}</string>
+     </property>
+     <property name="text">
+      <string>Enter Name</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="BITARY_8">
+     <property name="geometry">
+      <rect>
+       <x>38</x>
+       <y>188</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>-1</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:#354665;
+font-size:15px;
+border-radius: 20px;
+</string>
+     </property>
+     <property name="text">
+      <string>Password</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_6">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>210</y>
+       <width>311</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit {
+    background-color: #ffffff; 
+    border: 1px solid #A6BCDA;   
+    border-radius: 5px;      
+    padding: 5px;              
+    font-size: 12px;   
+	color : #718BAE
+ 
+}</string>
+     </property>
+     <property name="text">
+      <string>Enter Password</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>370</y>
+       <width>311</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>-1</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: rgb(27, 134, 198);
+    color: white;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 15px;
+}
+
+
+rgb(17, 121, 182)
+rgb(27, 134, 198)</string>
+     </property>
+     <property name="text">
+      <string>Log In</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>683</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

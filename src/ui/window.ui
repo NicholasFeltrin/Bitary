@@ -342,9 +342,8 @@ text-align: center;</string>
     border: 1px solid #ccc;  
     border-radius: 10px;      
     padding: 4px;             
-    color: #333;            
-    font-size: 13px;    
-	font-opacity: 20%;
+    color: #718BAE;            
+    font-size: 11px;    
 }</string>
                </property>
                <property name="text">
