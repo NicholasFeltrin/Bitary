@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>412</width>
-    <height>506</height>
+    <width>484</width>
+    <height>537</height>
    </rect>
   </property>
   <property name="font">
@@ -22,178 +22,295 @@
    <pixmap/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="PinjamFrame">
-    <property name="enabled">
-     <bool>true</bool>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
     </property>
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>411</width>
-      <height>451</height>
-     </rect>
+    <property name="topMargin">
+     <number>0</number>
     </property>
-    <property name="font">
-     <font>
-      <family>.AppleSystemUIFont</family>
-     </font>
+    <property name="rightMargin">
+     <number>0</number>
     </property>
-    <property name="mouseTracking">
-     <bool>false</bool>
+    <property name="bottomMargin">
+     <number>0</number>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgba(255, 255, 255, 1)</string>
+    <property name="spacing">
+     <number>0</number>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QLabel" name="BITARY">
-     <property name="geometry">
-      <rect>
-       <x>125</x>
-       <y>30</y>
-       <width>161</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>-1</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color:rgba(53, 70, 101, 1);
+    <item row="0" column="0">
+     <widget class="QWidget" name="widget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>181</width>
+        <height>371</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:grey;</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
+       <property name="spacing">
+        <number>18</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="frame">
+         <property name="minimumSize">
+          <size>
+           <width>181</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:white;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0,0">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
+          <property name="leftMargin">
+           <number>12</number>
+          </property>
+          <property name="topMargin">
+           <number>44</number>
+          </property>
+          <property name="rightMargin">
+           <number>12</number>
+          </property>
+          <property name="bottomMargin">
+           <number>49</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="BITARY_2">
+            <property name="font">
+             <font>
+              <family>Arial</family>
+              <pointsize>-1</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:rgba(53, 70, 101, 1);
 font-size:25px;
-border-radius: 38px;</string>
-     </property>
-     <property name="text">
-      <string>Borrow Book</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_5">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>110</y>
-       <width>341</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLineEdit {
+border-radius: 38px;
+text-align:center;</string>
+            </property>
+            <property name="text">
+             <string>Borrow Book</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_5">
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+border:none</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <property name="bottomMargin">
+              <number>3</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="Name_3">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>-1</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:#354665;
+font-size:15px;
+border-radius: 38px;
+</string>
+               </property>
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="enterName_3">
+               <property name="styleSheet">
+                <string notr="true">QLineEdit {
     background-color: #ffffff; 
     border: 1px solid #A6BCDA;   
     border-radius: 5px;      
     padding: 5px;              
     font-size: 14px;   
-	color : #718BAE
- 
+	color:#354665;
 }</string>
-     </property>
-     <property name="text">
-      <string>Enter Name</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="BITARY_7">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>90</y>
-       <width>41</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>-1</pointsize>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color:#354665;
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="placeholderText">
+                <string>Enter Name</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_6">
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+border:none</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_7">
+             <property name="bottomMargin">
+              <number>3</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="Name_4">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>-1</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:#354665;
 font-size:15px;
 border-radius: 38px;
 </string>
-     </property>
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_6">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>200</y>
-       <width>341</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLineEdit {
+               </property>
+               <property name="text">
+                <string>Class/Absent</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="enterName_4">
+               <property name="styleSheet">
+                <string notr="true">QLineEdit {
     background-color: #ffffff; 
     border: 1px solid #A6BCDA;   
     border-radius: 5px;      
     padding: 5px;              
     font-size: 14px;   
-	color : #718BAE
- 
+	color:#354665;
 }</string>
-     </property>
-     <property name="text">
-      <string>Enter Class/Absent</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="BITARY_8">
-     <property name="geometry">
-      <rect>
-       <x>36</x>
-       <y>176</y>
-       <width>91</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>-1</pointsize>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color:#354665;
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="placeholderText">
+                <string>Enter Class/Absent</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_7">
+            <property name="styleSheet">
+             <string notr="true">background-color:white;
+border:none</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <property name="bottomMargin">
+              <number>3</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="Name_5">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>-1</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:#354665;
 font-size:15px;
 border-radius: 38px;
 </string>
-     </property>
-     <property name="text">
-      <string>Class/Absent</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_3">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>380</y>
-       <width>341</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>-1</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
+               </property>
+               <property name="text">
+                <string>Book Name</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="addBook">
+            <property name="font">
+             <font>
+              <family>Arial</family>
+              <pointsize>-1</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
     background-color: rgb(27, 134, 198);
     color: white;
     border-radius: 10px;
@@ -201,48 +318,22 @@ border-radius: 38px;
     font-size: 15px;
 }
 </string>
-     </property>
-     <property name="text">
-      <string>Add Book</string>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="comboBox">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>280</y>
-       <width>351</width>
-       <height>32</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="BITARY_9">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>260</y>
-       <width>91</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>-1</pointsize>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color:#354665;
-font-size:15px;
-border-radius: 38px;
-</string>
-     </property>
-     <property name="text">
-      <string>Book Name</string>
-     </property>
-    </widget>
-   </widget>
+            </property>
+            <property name="text">
+             <string>Add Book</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
@@ -250,7 +341,7 @@ border-radius: 38px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>412</width>
+     <width>484</width>
      <height>24</height>
     </rect>
    </property>
