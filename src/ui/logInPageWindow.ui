@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>624</width>
-    <height>519</height>
+    <width>506</width>
+    <height>432</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>463</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -243,6 +249,9 @@ border-radius: 38px;
                   <property name="text">
                    <string/>
                   </property>
+                  <property name="echoMode">
+                   <enum>QLineEdit::Password</enum>
+                  </property>
                   <property name="placeholderText">
                    <string>Enter Password</string>
                   </property>
@@ -369,6 +378,12 @@ flex: 50;</string>
           </item>
           <item>
            <widget class="QLabel" name="BITARY_4">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <family>Arial Narrow</family>
@@ -401,7 +416,7 @@ background-color: none;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>624</width>
+     <width>506</width>
      <height>24</height>
     </rect>
    </property>
