@@ -30,7 +30,7 @@ set(QT_SOURCES
 set(QT_FORMS
         src/forms/window.ui
         src/forms/addBookPopUpWindow.ui
-        src/forms/borrowBookPopUpWindow.ui
+        src/forms/addBorrowPopUpWindow.ui
         src/forms/logInPageWindow.ui
   )
 
@@ -42,8 +42,10 @@ set(TEST_SOURCES
 set(LIBRARY_SOURCES
         src/library/library.c
         src/library/database.c
+        src/library/buffer.c
         src/library/library.h
         src/library/database.h
+        src/library/buffer.h
         src/library/helper.h
         src/library/defs.h
 )

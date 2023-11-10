@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddBookDialog</class>
- <widget class="QDialog" name="AddBookDialog">
+ <class>AddBorrowDialog</class>
+ <widget class="QDialog" name="AddBorrowDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>340</width>
-    <height>452</height>
+    <width>509</width>
+    <height>579</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>482</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -80,12 +86,12 @@
       <widget class="QWidget" name="widget_2" native="true">
        <property name="minimumSize">
         <size>
-         <width>181</width>
-         <height>281</height>
+         <width>291</width>
+         <height>401</height>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:grey;</string>
+        <string notr="true">background-color:grey</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="spacing">
@@ -104,15 +110,10 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QFrame" name="frame_3">
-          <property name="minimumSize">
-           <size>
-            <width>181</width>
-            <height>291</height>
-           </size>
-          </property>
+         <widget class="QFrame" name="frame_2">
           <property name="styleSheet">
-           <string notr="true">background-color:white;</string>
+           <string notr="true">border:none; 
+ background-color:white</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -120,17 +121,11 @@
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <property name="bottomMargin">
-            <number>19</number>
-           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_10">
            <item>
-            <spacer name="verticalSpacer">
+            <spacer name="verticalSpacer_4">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Preferred</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -140,8 +135,8 @@
              </property>
             </spacer>
            </item>
-           <item alignment="Qt::AlignTop">
-            <widget class="QLabel" name="addBook">
+           <item>
+            <widget class="QLabel" name="BITARY_3">
              <property name="font">
               <font>
                <family>Arial</family>
@@ -156,7 +151,7 @@ border-radius: 38px;
 text-align:center;</string>
              </property>
              <property name="text">
-              <string>Add Book</string>
+              <string>Borrow Book</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -164,69 +159,10 @@ text-align:center;</string>
             </widget>
            </item>
            <item>
-            <widget class="QFrame" name="frame_4">
+            <widget class="QFrame" name="frame_3">
              <property name="styleSheet">
-              <string notr="true">background-color:white;
-border:none</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <property name="bottomMargin">
-               <number>3</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="Name_3">
-                <property name="font">
-                 <font>
-                  <family>Arial</family>
-                  <pointsize>-1</pointsize>
-                  <bold>false</bold>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color:#354665;
-font-size:15px;
-border-radius: 38px;
-</string>
-                </property>
-                <property name="text">
-                 <string>Title</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="titleField">
-                <property name="styleSheet">
-                 <string notr="true">QLineEdit {
-    background-color: #ffffff; 
-    border: 1px solid #A6BCDA;   
-    border-radius: 5px;      
-    padding: 5px;              
-    font-size: 14px;   
-	color:#354665;
-}</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>Enter Book Title</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="frame_2">
-             <property name="styleSheet">
-              <string notr="true">background-color:white;
-border:none;</string>
+              <string notr="true">border:none; 
+ background-color:white</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -235,11 +171,8 @@ border:none;</string>
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_4">
-              <property name="topMargin">
-               <number>3</number>
-              </property>
               <item>
-               <widget class="QLabel" name="libraryId">
+               <widget class="QLabel" name="Name_6">
                 <property name="font">
                  <font>
                   <family>Arial</family>
@@ -254,12 +187,12 @@ border-radius: 38px;
 </string>
                 </property>
                 <property name="text">
-                 <string>Library Id</string>
+                 <string>Name</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="libraryIDField">
+               <widget class="QLineEdit" name="nameField">
                 <property name="styleSheet">
                  <string notr="true">QLineEdit {
     background-color: #ffffff; 
@@ -268,14 +201,115 @@ border-radius: 38px;
     padding: 5px;              
     font-size: 14px;   
 	color:#354665;
- 
 }</string>
                 </property>
                 <property name="text">
                  <string/>
                 </property>
                 <property name="placeholderText">
-                 <string>Enter Library Id</string>
+                 <string>Enter Name</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="frame_4">
+             <property name="styleSheet">
+              <string notr="true">border:none; 
+ background-color:white</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="QLabel" name="Name_7">
+                <property name="font">
+                 <font>
+                  <family>Arial</family>
+                  <pointsize>-1</pointsize>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color:#354665;
+font-size:15px;
+border-radius: 38px;
+</string>
+                </property>
+                <property name="text">
+                 <string>Class/Absent</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="classSequenceField">
+                <property name="styleSheet">
+                 <string notr="true">QLineEdit {
+    background-color: #ffffff; 
+    border: 1px solid #A6BCDA;   
+    border-radius: 5px;      
+    padding: 5px;              
+    font-size: 14px;   
+	color:#354665;
+}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>Enter Class/Absent</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="frame_8">
+             <property name="styleSheet">
+              <string notr="true">border:none; 
+ background-color:white</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <item>
+               <widget class="QLabel" name="Name_8">
+                <property name="font">
+                 <font>
+                  <family>Arial</family>
+                  <pointsize>-1</pointsize>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color:#354665;
+font-size:15px;
+border-radius: 38px;
+</string>
+                </property>
+                <property name="text">
+                 <string>Book Name</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="searchBox">
+                <property name="editable">
+                 <bool>true</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Search</string>
                 </property>
                </widget>
               </item>

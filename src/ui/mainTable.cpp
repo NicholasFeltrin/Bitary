@@ -20,6 +20,7 @@ MainTable::MainTable(QWidget *parent) {
 
   // Stretch Columns to fit entire table view width
   horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  verticalHeader()->setVisible(false);
 }
 
 void MainTable::showBookTable() {
@@ -34,6 +35,13 @@ void MainTable::showBorrowTable() {
   CHECK(retval != 0, "Error loading borrows from database", return);
   setModel(borrowModel);
   activeModel = borrowModel;
+}
+
+void MainTable::searchData(const char *keyword) {
+  int retval = activeModel->searchData(LOADBEGINNING, keyword);
+  CHECK(retval != 0, "Error loading books from database", return);
+  setModel(bookModel);
+  activeModel = bookModel;
 }
 
 void MainTable::loadMore() {
@@ -101,23 +109,55 @@ QVariant BookModel::headerData(int section, Qt::Orientation orientation, int rol
   return QVariant();
 }
 
+// WHAT THE FUCK
 int BookModel::loadMore(Scrolling scrolling) {
   int retval = 0;
   
   retval = LibraryLoadBookChunk(&data_, scrolling);
   CHECK(retval == -1, "Error LibraryLoadBookChunk()", return -1);
 
-  if(scrolling == LOADBEGINNING && rows < retval){
-    beginInsertRows(QModelIndex(), 0, (retval-rows)-1); endInsertRows();
+  if(scrolling == LOADBEGINNING){
+    beginResetModel(); 
+    rows = 0;
+    endResetModel();
+    beginInsertRows(QModelIndex(), 0, retval); 
     rows = retval;
-  }else if(scrolling == LOADBEGINNING && rows > retval){
-    beginRemoveRows(QModelIndex(), rows-(rows-retval), rows-1);
-    rows = retval;
-  }else if(scrolling == LOADREFRESH){
-    beginInsertRows(QModelIndex(), 0, 1); endInsertRows();
+    endInsertRows();
+  //}else if(scrolling == LOADREFRESH){
+    //beginInsertRows(QModelIndex(), 0, 1); endInsertRows();
   }else if(scrolling == LOADNEXT){
-    beginInsertRows(QModelIndex(), retval-rows, (rows+retval)-1); endInsertRows();
+    beginInsertRows(QModelIndex(), rows+1, (rows+retval)-1);
     rows += retval;
+    endInsertRows();
+  }
+  
+  QModelIndex topLeft = createIndex(0, 0);
+  QModelIndex bottomRight = createIndex(rowCount() - 1, columnCount() - 1);
+  emit dataChanged(topLeft, bottomRight);
+
+  return 0;
+}
+
+// WHAT THE FUCK
+int BookModel::searchData(Scrolling scrolling, const char *keyword) {
+  int retval = 0;
+  
+  retval = LibrarySearchBookChunk(&data_, scrolling, keyword);
+  CHECK(retval == -1, "Error LibraryLoadBookChunk()", return -1);
+
+  if(scrolling == LOADBEGINNING){
+    beginResetModel(); 
+    rows = 0;
+    endResetModel();
+    beginInsertRows(QModelIndex(), 0, retval); 
+    rows = retval;
+    endInsertRows();
+  //}else if(scrolling == LOADREFRESH){
+    //beginInsertRows(QModelIndex(), 0, 1); endInsertRows();
+  }else if(scrolling == LOADNEXT){
+    beginInsertRows(QModelIndex(), rows+1, (rows+retval)-1);
+    rows += retval;
+    endInsertRows();
   }
   
   QModelIndex topLeft = createIndex(0, 0);
@@ -193,6 +233,35 @@ int BorrowModel::loadMore(Scrolling scrolling) {
   //QModelIndex topLeft = createIndex(0, 0);
   //QModelIndex bottomRight = createIndex(rowCount() - 1, columnCount() - 1);
   //emit dataChanged(topLeft, bottomRight);
+
+  return 0;
+}
+
+// WHAT THE FUCK
+int BorrowModel::searchData(Scrolling scrolling, const char *keyword) {
+  int retval = 0;
+  
+  retval = LibrarySearchBorrowChunk(&data_, scrolling, keyword);
+  CHECK(retval == -1, "Error LibraryLoadBookChunk()", return -1);
+
+  if(scrolling == LOADBEGINNING){
+    beginResetModel(); 
+    rows = 0;
+    endResetModel();
+    beginInsertRows(QModelIndex(), 0, retval); 
+    rows = retval;
+    endInsertRows();
+  //}else if(scrolling == LOADREFRESH){
+    //beginInsertRows(QModelIndex(), 0, 1); endInsertRows();
+  }else if(scrolling == LOADNEXT){
+    beginInsertRows(QModelIndex(), rows+1, (rows+retval)-1);
+    rows += retval;
+    endInsertRows();
+  }
+  
+  QModelIndex topLeft = createIndex(0, 0);
+  QModelIndex bottomRight = createIndex(rowCount() - 1, columnCount() - 1);
+  emit dataChanged(topLeft, bottomRight);
 
   return 0;
 }

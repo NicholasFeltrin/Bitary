@@ -25,6 +25,7 @@ private slots:
   void on_dataBukuButton_clicked();
   void on_dataPinjamButton_clicked();
   void on_mainAddBtn_clicked();
+  void on_searchBar_returnPressed();
 
 private:
   Ui::MainWindow *ui;

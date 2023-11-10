@@ -5,8 +5,8 @@
 #include <time.h>
 
 
-#define BOOK_CHUNK 64
-#define BORROW_CHUNK 64
+#define BOOK_CHUNK 1024
+#define BORROW_CHUNK 1024
 
 
 typedef enum{
@@ -55,6 +55,8 @@ extern int LibraryDeleteBook(int bookID);
 extern int LibraryCreateBorrow(Borrow *borrow);
 extern int LibraryLoadBookChunk(Book **buffer, Scrolling scrolling);
 extern int LibraryLoadBorrowChunk(Borrow **buffer, Scrolling scrolling);
+extern int LibrarySearchBookChunk(Book **buffer, Scrolling scrolling, const char *keyword);
+extern int LibrarySearchBorrowChunk(Borrow **buffer, Scrolling scrolling, const char *keyword);
 
 extern int testCreate();
 extern int testFetch();

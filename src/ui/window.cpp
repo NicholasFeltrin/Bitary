@@ -45,6 +45,19 @@ void MainWindow::on_mainAddBtn_clicked() {
   mainTable->addData();
 }
 
+void MainWindow::on_searchBar_returnPressed(){
+  // Get the text from the QLineEdit
+  QString searchText = ui->searchBar->text();
+
+  // Convert QString to char*
+  QByteArray byteArray = searchText.toUtf8();
+  const char *keyword = byteArray.constData();
+
+  mainTable->searchData(keyword);
+
+}
+
 #include "window.moc"
+
 
 

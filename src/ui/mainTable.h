@@ -3,7 +3,9 @@
 
 #include <QAbstractTableModel>
 #include <QTableView>
+#include <qabstractitemmodel.h>
 #include <qtableview.h>
+#include <qtmetamacros.h>
 extern "C" {
 #include "src/library/library.h"
 }
@@ -23,6 +25,7 @@ class MainTable : public QTableView {
 
     void showBookTable();
     void showBorrowTable();
+    void searchData(const char *keyword);
     void addData();
 
   public slots:
@@ -42,6 +45,7 @@ class MainModel : public QAbstractTableModel {
 
   public:
     virtual int loadMore(Scrolling scrolling) = 0;
+    virtual int searchData(Scrolling scrolling, const char *keyword) = 0;
     virtual void addData(MainTable *parent) = 0;
 
   protected:
@@ -59,6 +63,7 @@ class BookModel : public MainModel {
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
     int loadMore(Scrolling scrolling) override;
     void addData(MainTable *parent) override;
+    int searchData(Scrolling scrolling, const char *keyword) override;
 
   private:
     Book *data_;
@@ -74,10 +79,12 @@ class BorrowModel : public MainModel {
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
     int loadMore(Scrolling scrolling) override;
     void addData(MainTable *parent) override;
+    int searchData(Scrolling scrolling, const char *keyword) override;
 
   private:
     Borrow *data_;
 };
+
 
 
 #endif

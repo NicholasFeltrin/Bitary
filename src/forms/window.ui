@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>948</width>
-    <height>753</height>
+    <width>1024</width>
+    <height>899</height>
    </rect>
   </property>
   <property name="font">
@@ -209,8 +209,14 @@ text-align: center;</string>
              <property name="bottomMargin">
               <number>20</number>
              </property>
-             <item>
+             <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
               <widget class="QPushButton" name="dataBukuButton">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
     background-color: #DDDDDD;
@@ -227,8 +233,14 @@ text-align: center;</string>
                </property>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
               <widget class="QPushButton" name="dataPinjamButton">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
     background-color: #DDDDDD;
@@ -258,8 +270,14 @@ text-align: center;</string>
                </property>
               </spacer>
              </item>
-             <item>
+             <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
               <widget class="QPushButton" name="setelanButton">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
      color: #5A5757;
@@ -275,8 +293,14 @@ text-align: center;</string>
                </property>
               </widget>
              </item>
-             <item>
+             <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
               <widget class="QPushButton" name="penggunaButton">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
     color: #5A5757;
@@ -347,7 +371,10 @@ text-align: center;</string>
 }</string>
                </property>
                <property name="text">
-                <string>Cari</string>
+                <string/>
+               </property>
+               <property name="placeholderText">
+                <string>Search</string>
                </property>
               </widget>
              </item>
@@ -357,7 +384,7 @@ text-align: center;</string>
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>Tambah</string>
+                <string>New</string>
                </property>
               </widget>
              </item>
@@ -393,7 +420,43 @@ text-align: center;</string>
                 <bool>true</bool>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: #D9D9D9;</string>
+                <string notr="true">  QTableView {
+    background-color: #f0f0f0;
+    alternate-background-color: #e0e0e0;
+    gridline-color: #bbbbbb;
+}
+
+QTableView::item:selected {
+    background-color: #aaffaa;
+}
+
+QHeaderView::section {
+    background-color: #d3d3d3;
+    color: #333333;
+    padding: 4px;
+}
+
+QTableView::horizontalHeader {
+    border-bottom: 2px solid #999999;
+}
+
+QTableView::verticalHeader {
+    border-right: 2px solid #999999;
+}
+
+QTableView::item {
+    border-bottom: 1px solid #dddddd;
+}
+
+QTableView::item:hover {
+    background-color: #c0c0c0;
+}</string>
+               </property>
+               <property name="showGrid">
+                <bool>true</bool>
+               </property>
+               <property name="gridStyle">
+                <enum>Qt::DashLine</enum>
                </property>
                <property name="pixmap" stdset="0">
                 <pixmap>../../assets/logoJB.png</pixmap>
@@ -425,7 +488,7 @@ text-align: center;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>948</width>
+     <width>1024</width>
      <height>19</height>
     </rect>
    </property>
