@@ -3,15 +3,30 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 
 #define BLOCK_SIZE 128
 
 typedef struct{
-  int size;
+  uint32_t size;
 
-  int stringStop;
+  uint32_t bufferStop;
   char *buffer;
+} singleBuffer;
+
+typedef struct{
+  uint32_t size;
+
+  uint32_t bufferStop;
+  void *buffer;
+
+  void *past;
+  void *present;
+  void *future;
+
+  //singleBuffer *
 } Buffer;
+
 
 
 extern Buffer *CreateBuffer(size_t size);

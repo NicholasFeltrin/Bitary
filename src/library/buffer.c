@@ -2,21 +2,26 @@
 #include <stdio.h>
 #include <string.h>
 #include "buffer.h"
-#include "library.h"
 #include "src/library/defs.h"
 
 
 Buffer *CreateBuffer(size_t size){
   Buffer *buffer = (Buffer*)malloc(sizeof(Buffer));
 
-  buffer->buffer = (char*)calloc(size, sizeof(char));
-  buffer->stringStop = 0;
-  buffer->size = size;
+  buffer->size = size*3;
+  buffer->buffer = (void*)calloc(buffer->size, 1);
+  buffer->past = buffer->buffer;
+  buffer->present = buffer->buffer+size;
+  buffer->future = buffer->buffer+(size*2);
+  buffer->bufferStop = 0;
 
   return buffer;
 }
 
-char *BufferWriteString(Buffer *buffer, const char *string, const size_t length){
+char *BufferWrite(Buffer *buffer, const void *object){
+  buffer->buffer
+
+
   char *ret;
   int newStop = buffer->stringStop+length+1;
 
