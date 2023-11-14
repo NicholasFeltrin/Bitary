@@ -4,6 +4,16 @@
 #include "buffer.h"
 #include "src/library/defs.h"
 
+typedef enum{
+  WRITING,
+  IDLE
+}STATUS ; 
+
+STATUS status;
+char *errormsg;
+
+void *bufferStop;
+int countStop;
 
 Buffer *CreateBuffer(size_t size){
   Buffer *buffer = (Buffer*)malloc(sizeof(Buffer));
@@ -18,31 +28,30 @@ Buffer *CreateBuffer(size_t size){
   return buffer;
 }
 
-char *BufferWrite(Buffer *buffer, const void *object){
-  buffer->buffer
-
-
-  char *ret;
-  int newStop = buffer->stringStop+length+1;
-
-  if(newStop > buffer->size){
-    char* tmp = (char*)realloc(buffer->buffer, buffer->size+BUFFER_LENGTH*sizeof(char));
-    if(tmp == NULL){
-      free(buffer->buffer);
-      return NULL;
-    }
-    else if(buffer->buffer != tmp){
-      buffer->buffer = tmp;
-    }
-    tmp = NULL;
+int SelectBuffer(Buffer *buffer, BufferSection section, size_t size){
+  if(status == WRITING){
+    return -1;
+  }else if(section == FUTURE){
+    bufferStop = buffer->past;
+  }else if(section == PAST){
+    bufferStop = buffer->future;
+  }else if(section == PRESENT){
+    return -1;
   }
+  status = WRITING;
+  countStop = 0;
+}
 
-  strcpy(buffer->buffer+buffer->stringStop, string);
-  ret = buffer->buffer+buffer->stringStop;
-  *(buffer->buffer+buffer->stringStop+length) = '\0';
-  buffer->stringStop = newStop;
+int WriteDataBuffer(Buffer *buffer, void *data, size_t size){
+  if(status == WRITING){
+    memcpy(bufferStop, data, size);
+    bufferStop += size;
+  }
+}
 
-  return ret;
+int FinalizeBuffer(Buffer buffer){
+  status = IDLE;
+  countStop = 0;
 }
 
 int FreeBuffer(Buffer *buffer){

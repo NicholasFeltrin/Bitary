@@ -27,6 +27,12 @@ typedef struct{
   //singleBuffer *
 } Buffer;
 
+typedef enum{
+  PAST,
+  PRESENT,
+  FUTURE
+}BufferSection ; 
+
 
 
 extern Buffer *CreateBuffer(size_t size);
