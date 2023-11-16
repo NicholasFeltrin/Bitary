@@ -5,39 +5,38 @@
 #include <string.h>
 #include <inttypes.h>
 
-#define BLOCK_SIZE 128
+const int blockSize = 500;
+
+typedef enum{
+  WRITING,
+  IDLE
+} BufferStatus ; 
+
+typedef enum{
+  PAST,
+  PRESENT,
+  FUTURE
+} TbufferSection ; 
 
 typedef struct{
-  uint32_t size;
+  int size;
+  BufferStatus status; 
 
-  uint32_t bufferStop;
+  int bufferStop;
   char *buffer;
-} singleBuffer;
+} Sbuffer;
 
 typedef struct{
   uint32_t sectionSize;
-  uint16_t elementSize;
   uint16_t numOfElements;
+  uint8_t elementSize;
+  BufferStatus status; 
 
   void *buffer;
 
   void *past;
   void *present;
   void *future;
-
-  //singleBuffer *
-} Buffer;
-
-typedef enum{
-  PAST,
-  PRESENT,
-  FUTURE
-} BufferSection ; 
-
-
-
-extern Buffer *CreateBuffer(size_t sectionSize, size_t elementSize);
-extern char *BufferWriteString(Buffer *buffer, const char *string, const size_t length);
-extern int FreeBuffer(Buffer *buffer);
+} Tbuffer;
 
 #endif // !BUFFER_H

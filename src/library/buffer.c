@@ -1,22 +1,48 @@
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "buffer.h"
-#include "defs.h"
 
-typedef enum{
-  WRITING,
-  IDLE
-}STATUS ; 
-
-STATUS status;
 char *errormsg;
+
+Tbuffer *selectedTbuffer;
+Sbuffer *selectedSbuffer;
 
 int countStop;
 void *bufferStop;
 
-Buffer *CreateBuffer(size_t numOfElements, size_t elementSize){
-  Buffer *buffer = (Buffer*)malloc(sizeof(Buffer));
+Sbuffer *sbuffer_create(size_t size){
+  Sbuffer *buffer = (Sbuffer*)malloc(sizeof(Sbuffer));
+
+  buffer->size = size;
+  buffer->buffer = (void*)calloc(buffer->size, sizeof(char));
+  buffer->bufferStop = 0;
+
+  return buffer;
+}
+
+int sbuffer_free(Sbuffer *buffer){
+  free(buffer->buffer);
+  free(buffer);
+  return 0;
+}
+
+char *sbuffer_appendstring(Sbuffer *buffer, char *string, size_t length){
+  char *ret;
+  int newStop = buffer->bufferStop+length+1;
+
+  if(newStop > buffer->size){
+    char *tmp = (char*)realloc(buffer->buffer, buffer->size+blockSize);
+    if(tmp == NULL){
+      free(buffer->buffer);
+      return NULL;
+    }else 
+  }
+}
+
+Tbuffer *tbuffer_create(size_t numOfElements, size_t elementSize){
+  Tbuffer *buffer = (Tbuffer*)malloc(sizeof(Tbuffer));
 
   buffer->numOfElements = numOfElements;
   buffer->elementSize = elementSize;
@@ -30,14 +56,14 @@ Buffer *CreateBuffer(size_t numOfElements, size_t elementSize){
   return buffer;
 }
 
-int FreeBuffer(Buffer *buffer){
+int tbuffer_free(Tbuffer *buffer){
   free(buffer->buffer);
   free(buffer);
   return 0;
 }
 
-int SelectBuffer(Buffer *buffer, BufferSection section){
-  if(status != IDLE){
+int tbuffer_select(Tbuffer *buffer, TbufferSection section){
+  if(buffer->status != IDLE){
     return -1;
   }else if(section == FUTURE){
     bufferStop = buffer->past;
@@ -46,34 +72,34 @@ int SelectBuffer(Buffer *buffer, BufferSection section){
   }else if(section == PRESENT){
     return -1;
   }
-  status = WRITING;
+  selectedTbuffer = buffer;
+  buffer->status = WRITING;
   countStop = 0;
 
   return 0;
 }
 
-int WriteDataBuffer(Buffer *buffer, void *data){
-  if(status == WRITING && countStop < buffer->numOfElements){
-    memcpy(bufferStop, data, buffer->elementSize);
+int tbuffer_writedata(void *data){
+  if(selectedTbuffer->status == WRITING && countStop < selectedTbuffer->numOfElements){
+    memcpy(bufferStop, data, selectedTbuffer->elementSize);
     ++countStop;
-    bufferStop += buffer->elementSize;
-  }else if(status != WRITING){
+    bufferStop += selectedTbuffer->elementSize;
+  }else if(selectedTbuffer->status != WRITING){
     return -1;
-  }else if(countStop >= buffer->numOfElements){
+  }else if(countStop >= selectedTbuffer->numOfElements){
     return -1;
   }
 
   return 0;
 }
 
-int FinalizeBuffer(Buffer buffer){
-  if(status != WRITING){
+int tbuffer_finalize(){
+  if(selectedTbuffer->status != WRITING){
     return -1;
   }else{
-    status = IDLE;
+    selectedTbuffer->status = IDLE;
     countStop = 0;
   }
 
   return 0;
 }
-
