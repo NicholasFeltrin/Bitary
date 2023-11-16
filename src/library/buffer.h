@@ -15,9 +15,10 @@ typedef struct{
 } singleBuffer;
 
 typedef struct{
-  uint32_t size;
+  uint32_t sectionSize;
+  uint16_t elementSize;
+  uint16_t numOfElements;
 
-  uint32_t bufferStop;
   void *buffer;
 
   void *past;
@@ -31,11 +32,11 @@ typedef enum{
   PAST,
   PRESENT,
   FUTURE
-}BufferSection ; 
+} BufferSection ; 
 
 
 
-extern Buffer *CreateBuffer(size_t size);
+extern Buffer *CreateBuffer(size_t sectionSize, size_t elementSize);
 extern char *BufferWriteString(Buffer *buffer, const char *string, const size_t length);
 extern int FreeBuffer(Buffer *buffer);
 
