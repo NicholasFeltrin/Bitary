@@ -1,21 +1,12 @@
 #ifndef DEFS_H
 #define DEFS_H
 
-#define DATABASE_FILE_PATH "/home/work/.local/share/Bitary/newdatabase.db"
-#define DATABASE_BOOKTABLE_NAME "books"
-#define DATABASE_BORROWTABLE_NAME "borrow"
+#define DATABASE_BOOKTABLE_NAME "books";
+#define DATABASE_BORROWTABLE_NAME "borrow";
 
-#define CACHE_LENGTH 1024
-#define BUFFER_LENGTH 1024
+const char *database_file_path = "/home/work/.local/share/Bitary/newdatabase.db";
 
-
-#define BOOK_TITLE_CACHE_LENGTH CACHE_LENGTH
-#define BOOK_TITLE_BUFFER_LENGTH CACHE_LENGTH
-#define BOOK_LIBRARYID_CACHE_LENGTH CACHE_LENGTH
-#define BOOK_LIBRARYID_BUFFER_LENGTH CACHE_LENGTH
-
-#define BORROW_CACHE_LENGTH CACHE_LENGTH
-#define BORROW_BUFFER_LENGTH CACHE_LENGTH
-
+const int block_size = 512;
+const int numbuer_of_allocated_elements = 128;
 
 #endif // !DEFS_H

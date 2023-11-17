@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "buffer.h"
+#include "defs.h"
 
 char *errormsg;
 
@@ -11,35 +12,6 @@ Sbuffer *selectedSbuffer;
 
 int countStop;
 void *bufferStop;
-
-Sbuffer *sbuffer_create(size_t size){
-  Sbuffer *buffer = (Sbuffer*)malloc(sizeof(Sbuffer));
-
-  buffer->size = size;
-  buffer->buffer = (void*)calloc(buffer->size, sizeof(char));
-  buffer->bufferStop = 0;
-
-  return buffer;
-}
-
-int sbuffer_free(Sbuffer *buffer){
-  free(buffer->buffer);
-  free(buffer);
-  return 0;
-}
-
-char *sbuffer_appendstring(Sbuffer *buffer, char *string, size_t length){
-  char *ret;
-  int newStop = buffer->bufferStop+length+1;
-
-  if(newStop > buffer->size){
-    char *tmp = (char*)realloc(buffer->buffer, buffer->size+blockSize);
-    if(tmp == NULL){
-      free(buffer->buffer);
-      return NULL;
-    }else 
-  }
-}
 
 Tbuffer *tbuffer_create(size_t numOfElements, size_t elementSize){
   Tbuffer *buffer = (Tbuffer*)malloc(sizeof(Tbuffer));
@@ -70,8 +42,9 @@ int tbuffer_select(Tbuffer *buffer, TbufferSection section){
   }else if(section == PAST){
     bufferStop = buffer->future;
   }else if(section == PRESENT){
-    return -1;
+    bufferStop = buffer->present;
   }
+  buffer->section = section;
   selectedTbuffer = buffer;
   buffer->status = WRITING;
   countStop = 0;
@@ -103,3 +76,57 @@ int tbuffer_finalize(){
 
   return 0;
 }
+
+Sbuffer *sbuffer_create(){
+  Sbuffer *buffer = (Sbuffer*)malloc(sizeof(Sbuffer));
+
+  buffer->size = block_size;
+  buffer->buffer = (void*)calloc(buffer->size, sizeof(char));
+  buffer->bufferStop = 0;
+
+  return buffer;
+}
+
+int sbuffer_free(Sbuffer *buffer){
+  free(buffer->buffer);
+  free(buffer);
+  return 0;
+}
+
+char *sbuffer_appendstring(Sbuffer *buffer, char *string, size_t length){
+  char *ret;
+  int newStop = buffer->bufferStop+length+1;
+
+  if(newStop > buffer->size){
+    char *tmp = (char*)realloc(buffer->buffer, buffer->size+block_size);
+    if(tmp == NULL){
+      free(buffer->buffer);
+      return NULL;
+    }else if(buffer->buffer != tmp){
+      buffer->buffer = tmp;
+    }
+    tmp = NULL;
+  }
+
+  strcpy(buffer->buffer+buffer->bufferStop, string);
+  ret = buffer->buffer+buffer->bufferStop;
+  *(ret+length) = '\0';
+  buffer->bufferStop = newStop;
+
+  return ret;
+}
+
+int sbuffer_clear(Sbuffer *buffer){
+  if(buffer->size > block_size){
+    char *tmp = (char*)realloc(buffer->buffer, block_size);
+    if(tmp == NULL){
+      free(buffer->buffer);
+      return -1;
+    }else if(buffer->buffer != tmp){
+      buffer->buffer = tmp;
+    }
+    tmp = NULL;
+  }
+  return 0;
+} 
+

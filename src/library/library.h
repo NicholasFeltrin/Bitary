@@ -1,13 +1,8 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
-#include "stdint.h"
+#include "buffer.h"
 #include <time.h>
-
-
-#define BOOK_CHUNK 1024
-#define BORROW_CHUNK 1024
-
 
 typedef enum{
   ONGOING = 0,
@@ -43,9 +38,23 @@ typedef struct{
   char *classSequence;
 }Borrow ;
 
+typedef struct{
+  Tbuffer *buffer;
+  Sbuffer *titleBuffer;
+  Sbuffer *libraryIDBuffer;
+}BookBuffer ;
 
-extern Book *dataBookBuffer;
-extern Borrow *dataBorrowBuffer;
+typedef struct{
+  Tbuffer *buffer;
+  Sbuffer *nameBuffer;
+  Sbuffer *classSequenceBuffer;
+}BorrowBuffer ;
+
+typedef struct{
+  BookBuffer bookBuffer;
+  BorrowBuffer borrowBuffer;
+}SearchBuffer ;
+
 
 extern int LibraryInit();
 extern int LibraryClose();
