@@ -7,13 +7,13 @@
 extern void TestCreateBooks(size_t n);
 
 void startUpTest(){
-  Book *ptr;
+  Tbuffer *ptr;
 
   TestCreateBooks(128);
-  //LibraryLoadBookChunk(&ptr, LOADBEGINNING);
+  LibraryLoadBookChunk(&ptr, LOADBEGINNING);
   //TestCreateBooks(128);
   //LibraryLoadBookChunk(&ptr, LOADNEXT);
-  //printf("PASS"); fflush(stdout);
+  printf("PASS"); fflush(stdout);
 }
 
 void TestCreateBooks(size_t n){
@@ -81,11 +81,11 @@ int testFetch(){
  // myBook = (Book *)malloc(100*sizeof(Book));
 //  loadBookDataChunk(&, LOADBEGINNING);
 
-  for(int i = 0;i < 20;++i){
-    printf("ID: %d\n", dataBookBuffer[i].bookID);
-    printf("borrowID: %d\n", dataBookBuffer[i].borrowID);
-    printf("title: %s\n", dataBookBuffer[i].title);
-  }
+  //for(int i = 0;i < 20;++i){
+    //printf("ID: %d\n", dataBookBuffer[i].bookID);
+    //printf("borrowID: %d\n", dataBookBuffer[i].borrowID);
+    //printf("title: %s\n", dataBookBuffer[i].title);
+  //}
 
   //free(myBook);
 

@@ -67,14 +67,36 @@ int tbuffer_writedata(void *data){
 }
 
 int tbuffer_finalize(){
-  if(selectedTbuffer->status != WRITING){
-    return -1;
+  void *tmp; 
+
+  if(selectedTbuffer->section == PRESENT && selectedTbuffer->status == WRITING){
+    tmp = selectedTbuffer->present;
+    selectedTbuffer->present = selectedTbuffer->future;
+    selectedTbuffer->future = selectedTbuffer->past;
+    selectedTbuffer->past = tmp;
+  }else if(selectedTbuffer->section == FUTURE && selectedTbuffer->status == WRITING){
+    tmp = selectedTbuffer->present; 
+    selectedTbuffer->present = selectedTbuffer->past;
+    selectedTbuffer->past = selectedTbuffer->future;
+    selectedTbuffer->future = tmp;
+  }else if(selectedTbuffer->section == PAST && selectedTbuffer->status == WRITING){
+    tmp = selectedTbuffer->present;
+    selectedTbuffer->present = selectedTbuffer->future;
+    selectedTbuffer->future = selectedTbuffer->past;
+    selectedTbuffer->past = tmp;
   }else{
-    selectedTbuffer->status = IDLE;
-    countStop = 0;
+    return -1; 
   }
 
+  selectedTbuffer->status = IDLE;
+  selectedTbuffer->section = NONE;
+  countStop = 0;
+
   return 0;
+}
+
+void *tbuffer_read(Tbuffer *buffer, int index){
+  return buffer->buffer+(index*buffer->elementSize); 
 }
 
 Sbuffer *sbuffer_create(){
@@ -127,6 +149,7 @@ int sbuffer_clear(Sbuffer *buffer){
     }
     tmp = NULL;
   }
+  buffer->bufferStop = 0;
+
   return 0;
 } 
-

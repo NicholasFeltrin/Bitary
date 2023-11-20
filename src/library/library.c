@@ -13,10 +13,10 @@ extern int LibraryCreateDatabase(char *path);
 extern int LibraryCreateBook(Book *book);
 extern int LibraryDeleteBook(int bookID);
 extern int LibraryCreateBorrow(Borrow *borrow);
-extern int LibraryLoadBookChunk(Book **buffer, Scrolling scrolling);
-extern int LibraryLoadBorrowChunk(Borrow **buffer, Scrolling scrolling);
-extern int LibrarySearchBookChunk(Book **buffer, Scrolling scrolling, const char *keyword);
-extern int LibrarySearchBorrowChunk(Borrow **buffer, Scrolling scrolling, const char *keyword);
+extern int LibraryLoadBookChunk(Tbuffer **buffer, Scrolling scrolling);
+extern int LibraryLoadBorrowChunk(Tbuffer **buffer, Scrolling scrolling);
+extern int LibrarySearchBookChunk(Tbuffer **buffer, Scrolling scrolling, const char *keyword);
+extern int LibrarySearchBorrowChunk(Tbuffer **buffer, Scrolling scrolling, const char *keyword);
 
 
 Database *database;
@@ -41,7 +41,7 @@ int LibraryInit(){
   CHECK(retval != 0, "Error in oppening database", return -1);
 
   // Allocate buffer for a chunk of books and borrows
-  bookBuffer.buffer = tbuffer_create(numbuer_of_allocated_elements, sizeof(Book));
+  bookBuffer.buffer = tbuffer_create(number_of_allocated_elements, sizeof(Book));
   CHECK(bookBuffer.buffer == NULL, "Error allocating tbuffer", return -1);
 
   bookBuffer.titleBuffer = sbuffer_create();
@@ -50,7 +50,7 @@ int LibraryInit(){
   bookBuffer.libraryIDBuffer = sbuffer_create();
   CHECK(bookBuffer.libraryIDBuffer == NULL, "Error allocating sbuffer", return -1);
 
-  borrowBuffer.buffer = tbuffer_create(numbuer_of_allocated_elements, sizeof(Borrow));
+  borrowBuffer.buffer = tbuffer_create(number_of_allocated_elements, sizeof(Borrow));
   CHECK(borrowBuffer.buffer == NULL, "Error allocating tbuffer", return -1);
 
   borrowBuffer.nameBuffer = sbuffer_create();
@@ -197,11 +197,12 @@ int LibraryCreateBorrow(Borrow *borrow){
   return 0;
 }
 
-int LibraryLoadBookChunk(Book **buffer, Scrolling scrolling){
+int LibraryLoadBookChunk(Tbuffer **buffer, Scrolling scrolling){
   int retval = 0; 
   static int offset = 0;
   int bufferTitleOffset = 0;
   int bufferLibraryIDOffset = 0;
+  Book bookToAdd;
 
   static char sqlQuery[128];
 
@@ -223,55 +224,57 @@ int LibraryLoadBookChunk(Book **buffer, Scrolling scrolling){
   // Prepare the query
   snprintf(sqlQuery, sizeof(sqlQuery), 
            "SELECT bookID, borrowID, title, libraryID FROM " DATABASE_BOOKTABLE_NAME " LIMIT %d OFFSET %d",
-           numbuer_of_allocated_elements, offset)
+           number_of_allocated_elements, offset)
   ;
 
   sqlite3_stmt *stmt;
   retval |= sqlite3_prepare_v2(database->database, sqlQuery, -1, &stmt, 0);
   CHECK(retval != SQLITE_OK, sqlite3_errmsg(database->database), return -1);
 
+  sbuffer_clear(bookBuffer.titleBuffer);
+  sbuffer_clear(bookBuffer.libraryIDBuffer);
 
   // Execute
   int i = 0;
   retval = sqlite3_step(stmt);
   while(retval == SQLITE_ROW){
+    bookToAdd.bookID = sqlite3_column_int(stmt, 0);
+    bookToAdd.borrowID = sqlite3_column_int(stmt, 1);
+    bookToAdd.title = sbuffer_appendstring(bookBuffer.titleBuffer, (char*)sqlite3_column_text(stmt, 2), sqlite3_column_bytes(stmt, 2));
+    bookToAdd.title = sbuffer_appendstring(bookBuffer.libraryIDBuffer, (char*)sqlite3_column_text(stmt, 3), sqlite3_column_bytes(stmt, 3));
 
-    // Copy to main buffer
-    dataBookBuffer[i].bookID = sqlite3_column_int(stmt, 0);
-    dataBookBuffer[i].borrowID = sqlite3_column_int(stmt, 1);
-
-    // Copy to string buffer
-    dataBookBuffer[i].title =  BufferWriteString(bookTitleBuffer, (char*)sqlite3_column_text(stmt, 2), sqlite3_column_bytes(stmt, 2));
-
-    dataBookBuffer[i].libraryID = BufferWriteString(bookLibraryIDBuffer, (char*)sqlite3_column_text(stmt, 3), sqlite3_column_bytes(stmt, 3));
+    tbuffer_writedata(&bookToAdd);
 
     retval = sqlite3_step(stmt);
     ++i;
   }
 
-  *buffer = dataBookBuffer;
-
   // Finalize
+  tbuffer_finalize();
   sqlite3_finalize(stmt);
   return i;
 }
 
-int LibraryLoadBorrowChunk(Borrow **buffer, Scrolling scrolling){
+int LibraryLoadBorrowChunk(Tbuffer **buffer, Scrolling scrolling){
   int retval = 0; 
   static int offset = 0;
   int bufferNameOffset = 0;
   int bufferClassSequenceOffset = 0;
+  Borrow borrowToAdd;
 
   static char sqlQuery[128];
 
   switch(scrolling){
     case LOADNEXT:
+      tbuffer_select(borrowBuffer.buffer, FUTURE);
       ++offset;
       break;
     case LOADPREV:
+      tbuffer_select(borrowBuffer.buffer, PAST);
       --offset;
       break;
     case LOADBEGINNING:
+      tbuffer_select(borrowBuffer.buffer, PRESENT);
       offset = 0;
       break;
   }
@@ -280,59 +283,60 @@ int LibraryLoadBorrowChunk(Borrow **buffer, Scrolling scrolling){
   snprintf(sqlQuery, sizeof(sqlQuery), 
            "SELECT borrowID, bookID, startTimestamp, endTimestamp, name, classSequence "
            "FROM " DATABASE_BORROWTABLE_NAME " LIMIT %d OFFSET %d",
-           numbuer_of_allocated_elements, offset);
+           number_of_allocated_elements, offset);
   ;
 
   sqlite3_stmt *stmt;
   retval |= sqlite3_prepare_v2(database->database, sqlQuery, -1, &stmt, 0);
   CHECK(retval != SQLITE_OK, sqlite3_errmsg(database->database), return -1);
 
+  sbuffer_clear(borrowBuffer.nameBuffer);
+  sbuffer_clear(borrowBuffer.classSequenceBuffer);
+
   // Execute
   int i = 0;
   retval = sqlite3_step(stmt);
   while(retval == SQLITE_ROW){
-    // Copy to main buffer
-    dataBorrowBuffer[i].borrowID = sqlite3_column_int(stmt, 0);
-    dataBorrowBuffer[i].bookID = sqlite3_column_int(stmt, 1);
-    dataBorrowBuffer[i].startTimestamp = (time_t)sqlite3_column_int(stmt, 2);
-    dataBorrowBuffer[i].endTimestamp = (time_t)sqlite3_column_int(stmt, 3);
+    borrowToAdd.borrowID = sqlite3_column_int(stmt, 0);
+    borrowToAdd.bookID = sqlite3_column_int(stmt, 1);
+    borrowToAdd.startTimestamp = (time_t)sqlite3_column_int(stmt, 2);
+    borrowToAdd.endTimestamp = (time_t)sqlite3_column_int(stmt, 3);
+    borrowToAdd.name = sbuffer_appendstring(bookBuffer.titleBuffer, (char*)sqlite3_column_text(stmt, 4), sqlite3_column_bytes(stmt, 4));
+    borrowToAdd.classSequence = sbuffer_appendstring(bookBuffer.libraryIDBuffer, (char*)sqlite3_column_text(stmt, 5), sqlite3_column_bytes(stmt, 5));
 
-    // Copy to string buffer
-    dataBorrowBuffer[i].name =  BufferWriteString(borrowNameBuffer, (char*)sqlite3_column_text(stmt, 4), sqlite3_column_bytes(stmt, 4));
-
-    dataBorrowBuffer[i].classSequence =  BufferWriteString(borrowClassSequenceBuffer, (char*)sqlite3_column_text(stmt, 5), sqlite3_column_bytes(stmt, 5));
+    tbuffer_writedata(&borrowToAdd);
 
     retval = sqlite3_step(stmt);
     ++i;
   }
 
-  *buffer = dataBorrowBuffer;
 
   // Finalize
+  tbuffer_finalize();
   sqlite3_finalize(stmt);
-  if(scrolling == LOADNEXT){
-    printf("AFJLADFJ\n");
-    fflush(stdout);
-  }
   return i;
 }
 
-int LibrarySearchBookChunk(Book **buffer, Scrolling scrolling, const char *keyword){
+int LibrarySearchBookChunk(Tbuffer **buffer, Scrolling scrolling, const char *keyword){
   int retval = 0; 
   static int offset = 0;
   int bufferTitleOffset = 0;
   int bufferLibraryIDOffset = 0;
+  Book bookToAdd;
 
   static char sqlQuery[128];
 
   switch(scrolling){
     case LOADNEXT:
+      tbuffer_select(bookBuffer.buffer, FUTURE);
       ++offset;
       break;
     case LOADPREV:
+      tbuffer_select(bookBuffer.buffer, PAST);
       --offset;
       break;
     case LOADBEGINNING:
+      tbuffer_select(bookBuffer.buffer, PRESENT);
       offset = 0;
       break;
   }
@@ -347,47 +351,51 @@ int LibrarySearchBookChunk(Book **buffer, Scrolling scrolling, const char *keywo
   retval |= sqlite3_prepare_v2(database->database, sqlQuery, -1, &stmt, 0);
   CHECK(retval != SQLITE_OK, sqlite3_errmsg(database->database), return -1);
 
+  sbuffer_clear(bookBuffer.titleBuffer);
+  sbuffer_clear(bookBuffer.libraryIDBuffer);
+
   // Execute
   int i = 0;
   retval = sqlite3_step(stmt);
   while(retval == SQLITE_ROW){
-    // Copy to main buffer
-    dataBookBuffer[i].bookID = sqlite3_column_int(stmt, 0);
-    dataBookBuffer[i].borrowID = sqlite3_column_int(stmt, 1);
+    bookToAdd.bookID = sqlite3_column_int(stmt, 0);
+    bookToAdd.borrowID = sqlite3_column_int(stmt, 1);
+    bookToAdd.title = sbuffer_appendstring(bookBuffer.titleBuffer, (char*)sqlite3_column_text(stmt, 2), sqlite3_column_bytes(stmt, 2));
+    bookToAdd.title = sbuffer_appendstring(bookBuffer.libraryIDBuffer, (char*)sqlite3_column_text(stmt, 3), sqlite3_column_bytes(stmt, 3));
 
-    // Copy to string buffer
-    dataBookBuffer[i].title =  BufferWriteString(searchBuffer, (char*)sqlite3_column_text(stmt, 2), sqlite3_column_bytes(stmt, 2));
-
-    dataBookBuffer[i].libraryID = BufferWriteString(searchBuffer, (char*)sqlite3_column_text(stmt, 3), sqlite3_column_bytes(stmt, 3));
+    tbuffer_writedata(&bookToAdd);
 
     retval = sqlite3_step(stmt);
     ++i;
   }
 
-  *buffer = dataBookBuffer;
-
   // Finalize
+  tbuffer_finalize();
   sqlite3_finalize(stmt);
   return i;
 }
 
 
-int LibrarySearchBorrowChunk(Borrow **buffer, Scrolling scrolling, const char *keyword){
+int LibrarySearchBorrowChunk(Tbuffer **buffer, Scrolling scrolling, const char *keyword){
   int retval = 0; 
   static int offset = 0;
   int bufferTitleOffset = 0;
   int bufferLibraryIDOffset = 0;
+  Borrow borrowToAdd;
 
   static char sqlQuery[128];
 
   switch(scrolling){
     case LOADNEXT:
+      tbuffer_select(borrowBuffer.buffer, FUTURE);
       ++offset;
       break;
     case LOADPREV:
+      tbuffer_select(borrowBuffer.buffer, PAST);
       --offset;
       break;
     case LOADBEGINNING:
+      tbuffer_select(borrowBuffer.buffer, PRESENT);
       offset = 0;
       break;
   }
@@ -402,26 +410,28 @@ int LibrarySearchBorrowChunk(Borrow **buffer, Scrolling scrolling, const char *k
   retval |= sqlite3_prepare_v2(database->database, sqlQuery, -1, &stmt, 0);
   CHECK(retval != SQLITE_OK, sqlite3_errmsg(database->database), return -1);
 
+  sbuffer_clear(borrowBuffer.nameBuffer);
+  sbuffer_clear(borrowBuffer.classSequenceBuffer);
+
   // Execute
   int i = 0;
   retval = sqlite3_step(stmt);
   while(retval == SQLITE_ROW){
-    // Copy to main buffer
-    dataBookBuffer[i].bookID = sqlite3_column_int(stmt, 0);
-    dataBookBuffer[i].borrowID = sqlite3_column_int(stmt, 1);
+    borrowToAdd.borrowID = sqlite3_column_int(stmt, 0);
+    borrowToAdd.bookID = sqlite3_column_int(stmt, 1);
+    borrowToAdd.startTimestamp = (time_t)sqlite3_column_int(stmt, 2);
+    borrowToAdd.endTimestamp = (time_t)sqlite3_column_int(stmt, 3);
+    borrowToAdd.name = sbuffer_appendstring(bookBuffer.titleBuffer, (char*)sqlite3_column_text(stmt, 4), sqlite3_column_bytes(stmt, 4));
+    borrowToAdd.classSequence = sbuffer_appendstring(bookBuffer.libraryIDBuffer, (char*)sqlite3_column_text(stmt, 5), sqlite3_column_bytes(stmt, 5));
 
-    // Copy to string buffer
-    dataBookBuffer[i].title =  BufferWriteString(searchBuffer, (char*)sqlite3_column_text(stmt, 2), sqlite3_column_bytes(stmt, 2));
-
-    dataBookBuffer[i].libraryID = BufferWriteString(searchBuffer, (char*)sqlite3_column_text(stmt, 3), sqlite3_column_bytes(stmt, 3));
+    tbuffer_writedata(&borrowToAdd);
 
     retval = sqlite3_step(stmt);
     ++i;
   }
 
-  *buffer = dataBookBuffer;
-
   // Finalize
+  tbuffer_finalize();
   sqlite3_finalize(stmt);
   return i;
 }

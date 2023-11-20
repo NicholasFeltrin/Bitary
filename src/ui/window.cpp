@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   mainTable->showBookTable();
 
 #ifdef DEBUG
-  //startUpTest();
+  startUpTest();
 #endif // DEBUG
 }
 
@@ -58,6 +58,3 @@ void MainWindow::on_searchBar_returnPressed(){
 }
 
 #include "window.moc"
-
-
-

@@ -62,12 +62,9 @@ extern int LibraryCreateDatabase(char *path);
 extern int LibraryCreateBook(Book *book);
 extern int LibraryDeleteBook(int bookID);
 extern int LibraryCreateBorrow(Borrow *borrow);
-extern int LibraryLoadBookChunk(Book **buffer, Scrolling scrolling);
-extern int LibraryLoadBorrowChunk(Borrow **buffer, Scrolling scrolling);
-extern int LibrarySearchBookChunk(Book **buffer, Scrolling scrolling, const char *keyword);
-extern int LibrarySearchBorrowChunk(Borrow **buffer, Scrolling scrolling, const char *keyword);
-
-extern int testCreate();
-extern int testFetch();
+extern int LibraryLoadBookChunk(Tbuffer **buffer, Scrolling scrolling);
+extern int LibraryLoadBorrowChunk(Tbuffer **buffer, Scrolling scrolling);
+extern int LibrarySearchBookChunk(Tbuffer **buffer, Scrolling scrolling, const char *keyword);
+extern int LibrarySearchBorrowChunk(Tbuffer **buffer, Scrolling scrolling, const char *keyword);
 
 #endif // !LIBRARY_H

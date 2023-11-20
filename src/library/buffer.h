@@ -13,7 +13,8 @@ typedef enum{
 typedef enum{
   PAST,
   PRESENT,
-  FUTURE
+  FUTURE,
+  NONE
 } TbufferSection ; 
 
 typedef struct{

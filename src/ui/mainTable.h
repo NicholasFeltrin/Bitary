@@ -50,7 +50,7 @@ class MainModel : public QAbstractTableModel {
 
   protected:
     int rows;
-    void *data_;
+    Tbuffer *data_;
 };
 
 class BookModel : public MainModel {
@@ -66,7 +66,7 @@ class BookModel : public MainModel {
     int searchData(Scrolling scrolling, const char *keyword) override;
 
   private:
-    Book *data_;
+    Tbuffer *data_;
 };
 
 class BorrowModel : public MainModel {
@@ -82,9 +82,7 @@ class BorrowModel : public MainModel {
     int searchData(Scrolling scrolling, const char *keyword) override;
 
   private:
-    Borrow *data_;
+    Tbuffer *data_;
 };
-
-
 
 #endif
